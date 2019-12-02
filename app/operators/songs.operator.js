@@ -24,8 +24,7 @@ exports.addNewSong = function(req, res) {
         artist: req.body.artist,
         album: req.body.album,
         track: req.body.track,
-        genre: req.body.genre,
-        isHidden: 0
+        genre: req.body.genre
     });
     songs
         .save()
