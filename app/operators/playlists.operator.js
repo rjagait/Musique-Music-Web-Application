@@ -5,7 +5,8 @@ exports.addNewPlaylist = function(req, res) {
         username: req.body.username,
         playlistArray: req.body.playlistArray,
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        isPublic: req.body.isPublic
     });
     playlist
         .save()
@@ -24,86 +25,101 @@ exports.addNewPlaylist = function(req, res) {
         });
 };
 
-// exports.getAllSongs = function(req, res) {
-//     Songs
-//         .find()
-//         .exec()
-//         .then(docs => {
-//             console.log(docs);
-//             if (docs.length > 0) {
-//                 res.status(200).json(docs);
-//             }
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({
-//                 error: err
-//             })
-//         });
-// };
+exports.getAllPlaylists = function(req, res) {
+    Playlists
+        .find()
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            if (docs.length > 0) {
+                res.status(200).json(docs);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
 
-// exports.getSongByID = function(req, res) {
-//     const id = req.params.id;
-//     Songs.findById(id)
-//         .exec()
-//         .then(doc => {
-//             console.log(doc);
-//             if (doc) {
-//                 res.status(200).json(doc);
-//             } else {
-//                 res.status(404).json({ message: 'No valid entry found' })
-//             }
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({ error: err });
-//         });
-// };
+exports.getPlaylistByUsername = function(req, res) {
+    const id = req.params.username;
+    Playlists.find({ $or: [{ username: id }, { isPublic: 1 }] })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({ message: 'No valid entry found' })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+};
 
-// exports.updateSongDetailsByID = function(req, res) {
-//     const id = req.params.id;
-//     Songs.update({ _id: id }, { $set: { genre: req.body.genre, title: req.body.title, artist: req.body.artist, album: req.body.album, track: req.body.track } }).exec()
-//         .then(result => {
-//             console.log(result);
-//             res.status(200).json(result);
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({
-//                 error: err
-//             })
-//         });
-// };
+exports.getPlaylistSearch = function(req, res) {
+    Playlists.find({ $or: [{ username: req.body.username }, { isPublic: 1 }] }).find({ title: { "$regex": req.body.title, "$options": "i" } })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({ message: 'No valid entry found' })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+};
 
-// exports.hideSong = function(req, res) {
-//     const id = req.params.id;
-//     Songs.update({ _id: id }, { $set: { isHidden: "1" } }).exec()
-//         .then(result => {
-//             console.log(result);
-//             res.status(200).json(result);
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({
-//                 error: err
-//             })
-//         });
-// };
+exports.addSongToPlaylist = function(req, res) {
+    Playlists.update({ _id: req.body.id }, { $push: { playlistArray: req.body.songid } }).exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
 
-// exports.unhideSong = function(req, res) {
-//     const id = req.params.id;
-//     Songs.update({ _id: id }, { $set: { isHidden: "0" } }).exec()
-//         .then(result => {
-//             console.log(result);
-//             res.status(200).json(result);
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({
-//                 error: err
-//             })
-//         });
-// };
+exports.removeSongFromPlaylist = function(req, res) {
+    Playlists.update({ _id: req.body.id }, { $pull: { playlistArray: req.body.songid } }).exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
+
+exports.updatePlaylistDetailsByID = function(req, res) {
+    const id = req.params.id;
+    Playlists.update({ _id: id }, { $set: { title: req.body.title, description: req.body.description } }).exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
 
 exports.deletePlaylist = function(req, res) {
     const id = req.params.id;

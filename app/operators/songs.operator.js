@@ -18,6 +18,24 @@ exports.getAllSongs = function(req, res) {
         });
 };
 
+exports.getAllSongsForUser = function(req, res) {
+    Songs
+        .find({ isHidden: 0 })
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            if (docs.length > 0) {
+                res.status(200).json(docs);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
+
 exports.addNewSong = function(req, res) {
     const songs = new Songs({
         title: req.body.title,
