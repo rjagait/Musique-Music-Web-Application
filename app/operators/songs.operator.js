@@ -36,6 +36,34 @@ exports.getAllSongsForUser = function(req, res) {
         });
 };
 
+exports.searchSongByAnyAttribute = function(req, res) {
+    const searchText = req.params.str;
+    Songs
+        .find({ isHidden: 0 })
+        .find({
+            $or: [
+                { title: { $regex: searchText, $options: 'i' } },
+                { artist: { $regex: searchText, $options: 'i' } },
+                { album: { $regex: searchText, $options: 'i' } },
+                { track: { $regex: searchText, $options: 'i' } },
+                { genre: { $regex: searchText, $options: 'i' } }
+            ]
+        })
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            if (docs.length > 0) {
+                res.status(200).json(docs);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
+
 exports.addNewSong = function(req, res) {
     const songs = new Songs({
         title: req.body.title,

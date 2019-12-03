@@ -7,8 +7,10 @@ const playlistOperator = require('../operators/playlists.operator');
 
 // song
 router.post('/song', songOperator.addNewSong);
+router.get('/song', songOperator.getAllSongsForUser);
 router.delete('/song/:id', songOperator.deleteSong);
 router.put('/song/:id', songOperator.updateSongDetailsByID);
+router.get('/song/search/:str', songOperator.searchSongByAnyAttribute);
 
 // review
 router.post('/review/:id', reviewOperator.addNewReview);
@@ -23,8 +25,8 @@ router.put('/playlist/updatedetails/:id', playlistOperator.updatePlaylistDetails
 
 // user
 router.post('/user', userOperator.addNewUser);
-router.get('/user', userOperator.getAllUsers); //dummy
-router.get('/user/byid/:id', userOperator.getUserByID); //dummy
-router.get('/user/byusername/:id', userOperator.getUserByUsername); //dummy
+router.get('/user', userOperator.getAllUsers);
+router.get('/user/byid/:id', userOperator.getUserByID);
+router.get('/user/byusername/:id', userOperator.getUserByUsername);
 
 module.exports = router;
