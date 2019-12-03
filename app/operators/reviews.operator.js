@@ -1,5 +1,8 @@
 const Reviews = require('../modules/reviews.module');
 
+/**
+ * Add a new review by a user/manager
+ */
 exports.addNewReview = function(req, res) {
     const id = req.params.id;
     const review = new Reviews({
@@ -24,6 +27,9 @@ exports.addNewReview = function(req, res) {
         });
 };
 
+/**
+ * Get reviews for a given song
+ */
 exports.getReviewBySongID = function(req, res) {
     const id = req.params.id;
     Reviews.findOne({ songid: id })
@@ -42,9 +48,14 @@ exports.getReviewBySongID = function(req, res) {
         });
 };
 
+/**
+ * Get the top reviews for a song
+ */
 exports.getTopReviews = function(req, res) {
     Reviews
         .find()
+        .sort('-rating')
+        .limit(2)
         .exec()
         .then(docs => {
             console.log(docs);

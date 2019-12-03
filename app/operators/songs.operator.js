@@ -1,5 +1,8 @@
 const Songs = require('../modules/songs.module');
 
+/**
+ * Get all songs for manager
+ */
 exports.getAllSongs = function(req, res) {
     Songs
         .find()
@@ -18,6 +21,9 @@ exports.getAllSongs = function(req, res) {
         });
 };
 
+/**
+ * Get all songs for a user
+ */
 exports.getAllSongsForUser = function(req, res) {
     Songs
         .find({ isHidden: 0 })
@@ -36,17 +42,22 @@ exports.getAllSongsForUser = function(req, res) {
         });
 };
 
+/**
+ * Search song by attribute, 
+ * 1. case-insensitive
+ * 2. Ignore whitespace and symbols
+ */
 exports.searchSongByAnyAttribute = function(req, res) {
     const searchText = req.params.str;
     Songs
         .find({ isHidden: 0 })
         .find({
             $or: [
-                { title: { $regex: searchText, $options: 'i' } },
-                { artist: { $regex: searchText, $options: 'i' } },
-                { album: { $regex: searchText, $options: 'i' } },
-                { track: { $regex: searchText, $options: 'i' } },
-                { genre: { $regex: searchText, $options: 'i' } }
+                { title: { $regex: searchText, $options: 'ix' } },
+                { artist: { $regex: searchText, $options: 'ix' } },
+                { album: { $regex: searchText, $options: 'ix' } },
+                { track: { $regex: searchText, $options: 'ix' } },
+                { genre: { $regex: searchText, $options: 'ix' } }
             ]
         })
         .exec()
@@ -64,6 +75,9 @@ exports.searchSongByAnyAttribute = function(req, res) {
         });
 };
 
+/**
+ * Add a new song by user/manager
+ */
 exports.addNewSong = function(req, res) {
     const songs = new Songs({
         title: req.body.title,
@@ -89,6 +103,9 @@ exports.addNewSong = function(req, res) {
         });
 };
 
+/**
+ * Get song by the SongID
+ */
 exports.getSongByID = function(req, res) {
     const id = req.params.id;
     Songs.findById(id)
@@ -107,6 +124,9 @@ exports.getSongByID = function(req, res) {
         });
 };
 
+/**
+ * Update the ID3v1 details of a song, supported by the module
+ */
 exports.updateSongDetailsByID = function(req, res) {
     const id = req.params.id;
     Songs.update({ _id: id }, { $set: { genre: req.body.genre, title: req.body.title, artist: req.body.artist, album: req.body.album, track: req.body.track } }).exec()
@@ -122,6 +142,9 @@ exports.updateSongDetailsByID = function(req, res) {
         });
 };
 
+/**
+ * Hide a song, by manager role
+ */
 exports.hideSong = function(req, res) {
     const id = req.params.id;
     Songs.update({ _id: id }, { $set: { isHidden: "1" } }).exec()
@@ -137,6 +160,9 @@ exports.hideSong = function(req, res) {
         });
 };
 
+/**
+ * Unhide a song, by manager role
+ */
 exports.unhideSong = function(req, res) {
     const id = req.params.id;
     Songs.update({ _id: id }, { $set: { isHidden: "0" } }).exec()
@@ -152,6 +178,9 @@ exports.unhideSong = function(req, res) {
         });
 };
 
+/**
+ * Delete a song by user/manager
+ */
 exports.deleteSong = function(req, res) {
     const id = req.params.id;
     Songs

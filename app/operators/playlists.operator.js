@@ -1,5 +1,8 @@
 const Playlists = require('../modules/playlists.module');
 
+/**
+ * Adding a new playlist with madatory title
+ */
 exports.addNewPlaylist = function(req, res) {
     const playlist = new Playlists({
         username: req.body.username,
@@ -25,6 +28,9 @@ exports.addNewPlaylist = function(req, res) {
         });
 };
 
+/**
+ * Return all playlists for manager login
+ */
 exports.getAllPlaylists = function(req, res) {
     Playlists
         .find()
@@ -43,6 +49,9 @@ exports.getAllPlaylists = function(req, res) {
         });
 };
 
+/**
+ * Get all playlists for auth user login
+ */
 exports.getPlaylistByUsername = function(req, res) {
     const id = req.params.username;
     Playlists.find({ $or: [{ username: id }, { isPublic: 1 }] })
@@ -61,8 +70,11 @@ exports.getPlaylistByUsername = function(req, res) {
         });
 };
 
+/**
+ * Search for playlist by name
+ */
 exports.getPlaylistSearch = function(req, res) {
-    Playlists.find({ $or: [{ username: req.body.username }, { isPublic: 1 }] }).find({ title: { "$regex": req.body.title, "$options": "i" } })
+    Playlists.find({ $or: [{ username: req.body.username }, { isPublic: 1 }] }).find({ title: { "$regex": req.body.title, "$options": "ix" } })
         .exec()
         .then(doc => {
             console.log(doc);
@@ -78,6 +90,9 @@ exports.getPlaylistSearch = function(req, res) {
         });
 };
 
+/**
+ * Add songs to array in playlist
+ */
 exports.addSongToPlaylist = function(req, res) {
     Playlists.update({ _id: req.body.id }, { $push: { playlistArray: req.body.songid } }).exec()
         .then(result => {
@@ -92,6 +107,9 @@ exports.addSongToPlaylist = function(req, res) {
         });
 };
 
+/**
+ * Remove songs from array in playlist
+ */
 exports.removeSongFromPlaylist = function(req, res) {
     Playlists.update({ _id: req.body.id }, { $pull: { playlistArray: req.body.songid } }).exec()
         .then(result => {
@@ -106,6 +124,9 @@ exports.removeSongFromPlaylist = function(req, res) {
         });
 };
 
+/**
+ * Update title/description of the playlist
+ */
 exports.updatePlaylistDetailsByID = function(req, res) {
     const id = req.params.id;
     Playlists.update({ _id: id }, { $set: { title: req.body.title, description: req.body.description } }).exec()
@@ -121,6 +142,9 @@ exports.updatePlaylistDetailsByID = function(req, res) {
         });
 };
 
+/**
+ * Delete a playlist by user/manager
+ */
 exports.deletePlaylist = function(req, res) {
     const id = req.params.id;
     Playlists

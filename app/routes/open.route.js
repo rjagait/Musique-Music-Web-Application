@@ -9,6 +9,6 @@ router.get('/song/:id', songOperator.getSongByID);
 
 // review
 router.get('/review/:id', reviewOperator.getReviewBySongID);
-router.get('/review', reviewOperator.getTopReviews); //not used, dummy
+router.get('/review', reviewOperator.getTopReviews);
 
 module.exports = router;

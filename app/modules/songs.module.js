@@ -6,6 +6,7 @@ const songsSchema = mongoose.Schema({
     album: { type: String, max: 30 },
     track: { type: String, max: 30 },
     genre: { type: String, max: 30 },
+    avgRating: { type: Number, required: true, default: 0 },
     isHidden: { type: Number, required: true, default: 0 },
 }, { collection: 'Songs' });
 

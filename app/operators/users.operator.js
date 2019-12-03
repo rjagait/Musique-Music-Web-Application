@@ -1,5 +1,8 @@
 const Users = require('../modules/users.module');
 
+/**
+ * Add a new user to the auth users list
+ */
 exports.addNewUser = function(req, res) {
     const users = new Users({
         username: req.body.username,
@@ -22,6 +25,9 @@ exports.addNewUser = function(req, res) {
         });
 };
 
+/**
+ * Get the list of all users, for manager role
+ */
 exports.getAllUsers = function(req, res) {
     Users
         .find()
@@ -40,6 +46,9 @@ exports.getAllUsers = function(req, res) {
         });
 };
 
+/**
+ * Search user by the userID
+ */
 exports.getUserByID = function(req, res) {
     const id = req.params.id;
     Users.findById(id)
@@ -58,6 +67,9 @@ exports.getUserByID = function(req, res) {
         });
 };
 
+/**
+ * Search user by the complete username
+ */
 exports.getUserByUsername = function(req, res) {
     const id = req.params.id;
     Users.find({ username: id })
@@ -76,6 +88,9 @@ exports.getUserByUsername = function(req, res) {
         });
 };
 
+/**
+ * Mark a user as manager, by manager role
+ */
 exports.setAsManager = function(req, res) {
     const id = req.params.username;
     Users.update({ username: id }, { $set: { isManager: "1" } }).exec()
@@ -91,6 +106,9 @@ exports.setAsManager = function(req, res) {
         });
 };
 
+/**
+ * Deactivate an existing user, by manager role
+ */
 exports.deactivateUser = function(req, res) {
     const id = req.params.username;
     Users.update({ username: id }, { $set: { isActive: "0" } }).exec()
@@ -106,6 +124,9 @@ exports.deactivateUser = function(req, res) {
         });
 };
 
+/**
+ * Activate a deactivated user, by manager role
+ */
 exports.activateUser = function(req, res) {
     const id = req.params.username;
     Users.update({ username: id }, { $set: { isActive: "1" } }).exec()
