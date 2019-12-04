@@ -18,6 +18,7 @@
   "homepage": "https://github.com/rjagait/ece9065-rjagait-project#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongo-sanitize": "^1.0.1",
     "mongoose": "^5.7.13"
   }
 }

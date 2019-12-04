@@ -7,6 +7,7 @@ exports.addNewReview = function(req, res) {
     const id = req.params.id;
     const review = new Reviews({
         songid: id,
+        userid: req.body.userid,
         review: req.body.review,
         rating: req.body.rating
     });
@@ -70,6 +71,3 @@ exports.getTopReviews = function(req, res) {
             })
         });
 };
-
-// exports.getTopReviews = function(req, res) {
-//     Reviews.find() //.sort('rating').limit(2)

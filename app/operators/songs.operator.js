@@ -6,6 +6,7 @@ const Songs = require('../modules/songs.module');
 exports.getAllSongs = function(req, res) {
     Songs
         .find()
+        .populate({ path: 'Reviews' })
         .exec()
         .then(docs => {
             console.log(docs);
