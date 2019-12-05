@@ -1,12 +1,117 @@
 const Users = require('../modules/users.module');
+const argon2 = require('argon2');
+const randomstring = require('randomstring');
 
 /**
  * Add a new user to the auth users list
+ * login
  */
-exports.addNewUser = function(req, res) {
+exports.loginUser = async function(req, res) {
+    const user = await Users.findOne({ username: req.body.username });
+    if (user == null || user.length < 1) {
+        return res.status(401).json({
+            message: "User doesn't exist"
+        });
+    }
+    isCorrectPassword = await argon2.verify(user.password, req.body.password);
+    if (!isCorrectPassword) {
+        return res.status(401).json({
+            message: "Incorrect Password"
+        })
+    } else if (user.isDeactivated) {
+        return res.status(401).json({
+            message: "Account Deactivated, please contact site admin"
+        })
+    } else if (!user.isActive) {
+        return res.status(401).json({
+            message: "Email not verified, please verify the email first"
+        })
+    } else {
+        return res.status(200).json({
+            message: 'Authentication Success'
+        })
+    }
+};
+
+/**
+ * Add a new user to the auth users list
+ * Signup user
+ */
+exports.signupUser = async function(req, res) {
+    const pass = await argon2.hash(req.body.password);
+    Users.find({ username: req.body.username })
+        .exec()
+        .then(user => {
+            if (user.length >= 1) {
+                return res.status(409).json({
+                    message: "Username Exists"
+                });
+            } else {
+                const token = randomstring.generate(7);
+                const users = new Users({
+                    username: req.body.username,
+                    password: pass,
+                    secretToken: token
+                });
+                users
+                    .save()
+                    .then(result => {
+                        console.log(result);
+                        res.status(201).json({
+                            message: 'POST REQUEST handling',
+                            createdDetail: result
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            error: err
+                        })
+                    });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
+
+/**
+ * Verify user and mark as active
+ * TODO: add email verification
+ */
+exports.verifyUser = async function(req, res) {
+    const user = await Users.findOne({ secretToken: req.body.secretToken });
+    if (user == null || user.length < 1) {
+        return res.status(401).json({
+            message: "User doesn't exist"
+        });
+    }
+    Users.update({ secretToken: req.body.secretToken }, { $set: { isActive: true } }).exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+
+};
+
+/**
+ * Add a new user to the auth users list
+ * Signup
+ */
+exports.addNewUser = async function(req, res) {
+    const pass = await argon2.hash(req.body.password);
     const users = new Users({
         username: req.body.username,
-        password: req.body.password
+        password: pass
     });
     users
         .save()
@@ -111,7 +216,7 @@ exports.setAsManager = function(req, res) {
  */
 exports.deactivateUser = function(req, res) {
     const id = req.params.username;
-    Users.update({ username: id }, { $set: { isActive: "0" } }).exec()
+    Users.update({ username: id }, { $set: { isDeactivated: "1" } }).exec()
         .then(result => {
             console.log(result);
             res.status(200).json(result);
@@ -129,7 +234,7 @@ exports.deactivateUser = function(req, res) {
  */
 exports.activateUser = function(req, res) {
     const id = req.params.username;
-    Users.update({ username: id }, { $set: { isActive: "1" } }).exec()
+    Users.update({ username: id }, { $set: { isDeactivated: "0" } }).exec()
         .then(result => {
             console.log(result);
             res.status(200).json(result);

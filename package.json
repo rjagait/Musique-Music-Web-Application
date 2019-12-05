@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/rjagait/ece9065-rjagait-project#readme",
   "dependencies": {
+    "argon2": "^0.25.1",
+    "email-verification": "^0.4.6",
     "express": "^4.17.1",
     "mongo-sanitize": "^1.0.1",
-    "mongoose": "^5.7.13"
+    "mongoose": "^5.7.13",
+    "randomstring": "^1.1.5"
   }
 }
