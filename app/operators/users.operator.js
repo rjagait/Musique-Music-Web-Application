@@ -1,6 +1,8 @@
 const Users = require('../modules/users.module');
 const argon2 = require('argon2');
 const randomstring = require('randomstring');
+const jwt = require('jsonwebtoken');
+const auth = require('../../config/auth');
 
 /**
  * Add a new user to the auth users list
@@ -27,8 +29,16 @@ exports.loginUser = async function(req, res) {
             message: "Email not verified, please verify the email first"
         })
     } else {
+        const token = jwt.sign({
+                username: user.username,
+                userId: user._id
+            },
+            auth.jwtkey, {
+                expiresIn: "1h"
+            });
         return res.status(200).json({
-            message: 'Authentication Success'
+            message: 'Authentication Success',
+            token: token
         })
     }
 };
