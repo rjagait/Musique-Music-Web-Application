@@ -18,7 +18,7 @@ exports.loginUser = async function(req, res) {
     isCorrectPassword = await argon2.verify(user.password, req.body.password);
     if (!isCorrectPassword) {
         return res.status(401).json({
-            message: "Incorrect Password"
+            message: "Incorrect Password, please try again"
         })
     } else if (user.isDeactivated) {
         return res.status(401).json({

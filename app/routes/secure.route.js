@@ -25,8 +25,6 @@ router.put('/playlist/removesong', checkAuth.checkauthUser, playlistOperator.rem
 router.put('/playlist/updatedetails/:id', checkAuth.checkauthUser, playlistOperator.updatePlaylistDetailsByID);
 
 // user
-router.post('/user/login', checkAuth.checkauthUser, userOperator.loginUser);
-router.post('/user/signup', checkAuth.checkauthUser, userOperator.signupUser);
 router.post('/user/verify', checkAuth.checkauthUser, userOperator.verifyUser);
 router.post('/user', checkAuth.checkauthUser, userOperator.addNewUser);
 router.get('/user', checkAuth.checkauthUser, userOperator.getAllUsers);

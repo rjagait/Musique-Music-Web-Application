@@ -1,0 +1,22 @@
+<div class=loginForm id="UserDetails">
+    <form id="userDetailForm" action="/action_page.php" method="POST">
+        <h2>LOGIN</h2>
+        <div class="container">
+            <label for="name"><b>Username</b></label><br>
+            <input type="text" [(ngModel)]="username" id="name" placeholder="Enter Email ID" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
+
+            <label for="psw"><b>Password</b></label><br>
+            <input type="password" [(ngModel)]="password" placeholder="Enter Password" name="password" required><br>
+
+            <button type="button" (click)="userLogin(username, password)">Login</button><br>
+            <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me<br>
+        </label>
+        </div>
+
+        <div class="container2">
+            <a href="#">Forgot password?</a> | <a href="#">Register</a>
+        </div>
+
+    </form>
+</div>

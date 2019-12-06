@@ -1,0 +1,20 @@
+/* Styling the login page */
+
+.loginForm {
+    background-image: url("../images/background6.jpg");
+    min-height: 564px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    font-family: Georgia, Cambria, "Times New Roman", serif;
+    .about {
+        position: absolute;
+        top: 8px;
+        left: 16px;
+        color: black;
+        text-shadow: 0.2px 0.2px gray;
+        max-width: 70%;
+        padding-top: 8%;
+    }
+}
