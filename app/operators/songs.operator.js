@@ -54,11 +54,11 @@ exports.searchSongByAnyAttribute = function(req, res) {
         .find({ isHidden: 0 })
         .find({
             $or: [
-                { title: { $regex: searchText, $options: 'ix' } },
-                { artist: { $regex: searchText, $options: 'ix' } },
-                { album: { $regex: searchText, $options: 'ix' } },
-                { track: { $regex: searchText, $options: 'ix' } },
-                { genre: { $regex: searchText, $options: 'ix' } }
+                { title: { $regex: searchText, $options: 'i' } },
+                { artist: { $regex: searchText, $options: 'i' } },
+                { album: { $regex: searchText, $options: 'i' } },
+                { track: { $regex: searchText, $options: 'i' } },
+                { genre: { $regex: searchText, $options: 'i' } }
             ]
         })
         .exec()

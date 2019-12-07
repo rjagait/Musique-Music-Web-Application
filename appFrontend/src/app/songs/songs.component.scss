@@ -1,0 +1,56 @@
+/* Styling the songs page */
+
+.songs {
+    background-image: url("../images/background6.jpg");
+    min-height: 564px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    font-family: Georgia, Cambria, "Times New Roman", serif;
+    // .searchContainer {
+    //     // display: inline;
+    // }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        li {
+            background: rgba(250, 244, 215, 0.856);
+            padding: 1em;
+            margin-right: 10px;
+            width: 20%;
+            margin-bottom: 1em;
+            display: flex;
+            flex-direction: column;
+            p {
+                margin: 0;
+            }
+            p.name {
+                font-weight: bold;
+                font-size: 1rem;
+            }
+            p.detail {
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+
+.notifButton {
+    // float: right;
+    background-color: rgb(0, 0, 0, 0.2);
+    text-decoration: none;
+    padding: 10px 15px;
+    position: relative;
+    // max-width: 100px;
+    display: inline-block;
+    border: none;
+    color: white;
+}
+
+.notifButton:hover {
+    background-color: rgb(0, 0, 0);
+}

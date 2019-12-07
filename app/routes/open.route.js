@@ -5,8 +5,9 @@ const reviewOperator = require('../operators/reviews.operator');
 const userOperator = require('../operators/users.operator');
 
 // song
-// router.get('/song', songOperator.getAllSongsForUser);
-// router.get('/song/:id', songOperator.getSongByID);
+router.get('/song', songOperator.getAllSongsForUser);
+router.get('/song/:id', songOperator.getSongByID);
+router.get('/song/search/:str', songOperator.searchSongByAnyAttribute);
 
 // review
 // router.get('/review/:id', reviewOperator.getReviewBySongID);
