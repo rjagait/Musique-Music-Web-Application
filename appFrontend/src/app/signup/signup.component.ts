@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpService } from "../http.service";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+
+const db = require("../../../../config/database");
+const openUrl = db.url + "/open";
 
 @Component({
   selector: "app-signup",
@@ -9,14 +11,15 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./signup.component.scss"]
 })
 export class SignupComponent implements OnInit {
-  constructor(
-    private _http: HttpService,
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {}
 
+  /**
+   * Controls user signup
+   * @param Username Email ID of user
+   * @param Password Password to be set
+   */
   userSignup(Username, Password) {
     const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (!Username.match(regExEmail)) {
@@ -26,7 +29,7 @@ export class SignupComponent implements OnInit {
 
     this.http
       .post(
-        "http://localhost:3000/api/open/user/signup",
+        openUrl + "/user/signup",
         {
           username: Username,
           password: Password

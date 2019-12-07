@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpService } from "../http.service";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 
-import { finalize, tap } from "rxjs/operators";
+const db = require("../../../../config/database");
+const openUrl = db.url + "/open";
 
 @Component({
   selector: "app-login",
@@ -13,18 +13,22 @@ import { finalize, tap } from "rxjs/operators";
 export class LoginComponent implements OnInit {
   message: Object;
 
-  constructor(
-    private _http: HttpService,
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {}
 
+  /**
+   * Controls route redirect
+   */
   gotoSignup() {
     this.router.navigate(["signup"]);
   }
 
+  /**
+   * Page to login to the website
+   * @param Username email ID of the user
+   * @param Password password set by user
+   */
   userLogin(Username, Password) {
     const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (!Username.match(regExEmail)) {
@@ -34,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     this.http
       .post(
-        "http://localhost:3000/api/open/user/login",
+        openUrl + "/user/login",
         {
           username: Username,
           password: Password

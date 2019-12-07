@@ -19,7 +19,7 @@ export class SongsComponent implements OnInit {
 
   ngOnInit() {
     console.log("Get top songs on init");
-    // rjagait: get top 10 songs
+    // Get top 10 songs
     this.http
       .get(openUrl + "/song/topn", {
         observe: "response"
@@ -38,6 +38,9 @@ export class SongsComponent implements OnInit {
       );
   }
 
+  /**
+   * Search song by a string for any attribute
+   */
   searchSong(Songname) {
     console.log("Searching by attribute");
     const regExName = /^[a-zA-Z0-9 àâçéèêëîïôûùüÿñæœ\',]*$/;
@@ -64,6 +67,10 @@ export class SongsComponent implements OnInit {
       );
   }
 
+  /**
+   * Search song by ID
+   * @param SongID Song _id in songs table
+   */
   getSongByID(SongID) {
     console.log("Getting song by ID");
     this.http
@@ -86,6 +93,10 @@ export class SongsComponent implements OnInit {
       );
   }
 
+  /**
+   * Returns all the reviews for a given song
+   * @param SongID Song _id in songs table
+   */
   getAllReviews(SongID) {
     console.log("Getting reviews by ID");
     this.http
@@ -107,10 +118,18 @@ export class SongsComponent implements OnInit {
       );
   }
 
+  /**
+   * Controls the display of show song details
+   * Show
+   */
   openNav() {
     document.getElementById("myNav").style.width = "100%";
   }
 
+  /**
+   * Controls the display of show song details
+   * Hide
+   */
   closeNav() {
     document.getElementById("myNav").style.width = "0%";
     document.getElementById("moreButton").style.display = "block";
