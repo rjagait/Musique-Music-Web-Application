@@ -3,7 +3,7 @@
         <h2>LOGIN</h2>
         <div class="container">
             <label for="name"><b>Username</b></label><br>
-            <input type="text" [(ngModel)]="username" id="name" placeholder="Enter Email ID" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
+            <input type="email" [(ngModel)]="username" id="name" placeholder="Enter Email ID" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
 
             <label for="psw"><b>Password</b></label><br>
             <input type="password" [(ngModel)]="password" placeholder="Enter Password" name="password" required><br>
@@ -15,7 +15,7 @@
         </div>
 
         <div class="container2">
-            <a href="#">Forgot password?</a> | <a href="#">Register</a>
+            Not a user? <a href="/signup">Register</a>
         </div>
 
     </form>

@@ -14,6 +14,6 @@ const userOperator = require('../operators/users.operator');
 
 // user
 router.post('/user/login', userOperator.loginUser);
-// router.post('/user/signup', userOperator.signupUser);
+router.post('/user/signup', userOperator.signupUser);
 
 module.exports = router;

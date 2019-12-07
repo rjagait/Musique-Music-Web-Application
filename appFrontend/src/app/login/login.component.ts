@@ -12,8 +12,6 @@ import { finalize, tap } from "rxjs/operators";
 })
 export class LoginComponent implements OnInit {
   message: Object;
-  // uername: string;
-  // password: string;
 
   constructor(
     private _http: HttpService,
@@ -23,12 +21,17 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
+  gotoSignup() {
+    this.router.navigate(["signup"]);
+  }
+
   userLogin(Username, Password) {
-    // if( Username =='admin' && Password == 'admin'){
-    //   this.router.navigate(['signup']);
-    // } else {
-    //   alert("Invalid credentials");
-    // }
+    const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    if (!Username.match(regExEmail)) {
+      alert("Expected email, found " + Username);
+      return;
+    }
+
     this.http
       .post(
         "http://localhost:3000/api/open/user/login",
@@ -42,6 +45,7 @@ export class LoginComponent implements OnInit {
         res => {
           console.log(res);
           if (res.status == 200) {
+            console.log(res);
             alert("Login Success");
           }
         },
@@ -49,7 +53,8 @@ export class LoginComponent implements OnInit {
           console.log(err);
           switch (err.error.message) {
             case "User doesn't exist": {
-              this.router.navigate(['signup']);
+              //rjagait: username does't exist, please signup
+              this.gotoSignup();
               break;
             }
             default: {
