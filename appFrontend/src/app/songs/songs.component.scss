@@ -8,9 +8,52 @@
     background-size: cover;
     position: relative;
     font-family: Georgia, Cambria, "Times New Roman", serif;
-    // .searchContainer {
-    //     // display: inline;
-    // }
+    .overlay {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        overflow-x: hidden;
+        transition: 0.5s;
+        background-color: rgba(13, 49, 37, 0.9);
+        .overlay-content {
+            position: relative;
+            top: 10%;
+            width: 100%;
+            .split {
+                min-height: 540px;
+                width: 50%;
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                overflow-x: hidden;
+                padding-top: 20px;
+            }
+            .left {
+                left: 0;
+                // background-color: rgba(13, 49, 37, 0.9);
+            }
+            .right {
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.2);
+                .closebtn {
+                    position: absolute;
+                    top: 20px;
+                    right: 45px;
+                    font-size: 60px;
+                }
+            }
+        }
+        h2,
+        p {
+            padding: 8px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+    }
     ul {
         list-style-type: none;
         margin: 0;
@@ -35,6 +78,11 @@
             p.detail {
                 font-size: 0.8rem;
             }
+        }
+        .songReview {
+            margin-left: 10%;
+            width: 70%;
+            background: rgba(250, 244, 215, 0.4);
         }
     }
 }

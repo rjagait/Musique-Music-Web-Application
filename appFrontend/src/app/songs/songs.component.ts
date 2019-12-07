@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 
+const db = require("../../../../config/database");
+const openUrl = db.url + "/open";
+
 @Component({
   selector: "app-songs",
   templateUrl: "./songs.component.html",
@@ -10,13 +13,15 @@ import { HttpClient } from "@angular/common/http";
 export class SongsComponent implements OnInit {
   searchedSongs: Object;
   famousSongs: Object;
+  songDetails: Object;
+  songReviews: object;
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     console.log("Get top songs on init");
     // rjagait: get top 10 songs
     this.http
-      .get("http://localhost:3000/api/open/song/", {
+      .get(openUrl + "/song/topn", {
         observe: "response"
       })
       .subscribe(
@@ -42,7 +47,7 @@ export class SongsComponent implements OnInit {
     }
 
     this.http
-      .get("http://localhost:3000/api/open/song/search/" + Songname, {
+      .get(openUrl + "/song/search/" + Songname, {
         observe: "response"
       })
       .subscribe(
@@ -62,14 +67,16 @@ export class SongsComponent implements OnInit {
   getSongByID(SongID) {
     console.log("Getting song by ID");
     this.http
-      .get("http://localhost:3000/api/open/song/" + SongID, {
+      .get(openUrl + "/song/" + SongID, {
         observe: "response"
       })
       .subscribe(
         res => {
           if (res.status == 200) {
             console.log(res);
-            // rjagait: redirect to song details
+            this.songDetails = res.body;
+            this.songReviews = res.body.reviews;
+            this.openNav();
           }
         },
         err => {
@@ -79,4 +86,33 @@ export class SongsComponent implements OnInit {
       );
   }
 
+  getAllReviews(SongID) {
+    console.log("Getting reviews by ID");
+    this.http
+      .get(openUrl + "/review/" + SongID, {
+        observe: "response"
+      })
+      .subscribe(
+        res => {
+          if (res.status == 200) {
+            console.log(res);
+            this.songReviews = res.body;
+            document.getElementById("moreButton").style.display = "none";
+          }
+        },
+        err => {
+          console.log(err);
+          alert(err.error.message);
+        }
+      );
+  }
+
+  openNav() {
+    document.getElementById("myNav").style.width = "100%";
+  }
+
+  closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+    document.getElementById("moreButton").style.display = "block";
+  }
 }

@@ -1,25 +1,52 @@
 <div class=songs>
+    <div id="myNav" class="overlay">
+        <div class="overlay-content" *ngIf="songDetails ">
+            <div class="split left">
+                <h2>Song Details</h2>
+                <p><b>{{ songDetails.title }}</b></p>
+                <p><b>Artist: </b>{{ songDetails.title }}</p>
+                <p><b>Album: </b>{{ songDetails.album }}</p>
+                <p><b>Track: </b>{{ songDetails.track }}</p>
+                <p><b>Genre: </b>{{ songDetails.genre }}</p>
+                <p><b>No of Reviews: </b>{{ songDetails.totalReviews }}</p>
+                <p><b>Average Rating: </b>{{ songDetails.avgRating }}</p>
+            </div>
+            <div class="split right">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+                <h2>Song Reviews</h2>
+                <ul *ngIf="songReviews ">
+                    <li class='songReview' *ngFor="let songreview of songReviews ">
+                        <p class="detail "><b>Review:</b> {{ songreview.review }}</p>
+                        <p class="detail "><b>Rating:</b> {{ songreview.rating }}</p>
+                        <p class="detail "><b>By:</b> {{ songreview.userid.username }}</p>
+                    </li>
+                </ul>
+                <button id='moreButton' class="notifButton" type="button " (click)="getAllReviews(songDetails._id) "> More... </button>
+            </div>
+        </div>
+    </div>
+
     <span class=searchContainer>
-        <input class="notifButton" type="text" [(ngModel)]="songname" placeholder="Enter search text here" maxlength="100" title="This search supports all attributes to search for songs" pattern='^[0-9a-zA-Z]*$' required><br>
-        <button class="notifButton" type="button" (click)="searchSong(songname)"> &#8981; </button>
+        <input class="notifButton " type="text " [(ngModel)]="songname " placeholder="Enter search text here " maxlength="100 " title="This search supports all attributes to search for songs " pattern='^[0-9a-zA-Z]*$' required><br>
+        <button class="notifButton " type="button " (click)="searchSong(songname) "> &#8981; </button>
     </span>
-    <ul *ngIf="searchedSongs">
-        <li *ngFor="let searchedsong of searchedSongs">
-            <button class="notifButton" type="button" (click)="getSongByID(searchedsong._id)"><b>{{ searchedsong.title }} </b></button>
-            <p class="detail"><b>Artist:</b> {{ searchedsong.artist }}</p>
-            <p class="detail"><b>Album:</b> {{ searchedsong.album }}</p>
-            <p class="detail"><b>Track:</b> {{ searchedsong.track }}</p>
-            <p class="detail"><b>Genre:</b> {{ searchedsong.genre }}</p>
+    <ul *ngIf="searchedSongs ">
+        <li *ngFor="let searchedsong of searchedSongs ">
+            <button class="notifButton " type="button " (click)="getSongByID(searchedsong._id) "><b>{{ searchedsong.title }} </b></button>
+            <p class="detail "><b>Artist:</b> {{ searchedsong.artist }}</p>
+            <p class="detail "><b>Album:</b> {{ searchedsong.album }}</p>
+            <p class="detail "><b>Track:</b> {{ searchedsong.track }}</p>
+            <p class="detail "><b>Genre:</b> {{ searchedsong.genre }}</p>
         </li>
     </ul>
     <h2>Listing top 10 songs as per reviews</h2>
-    <ul *ngIf="famousSongs">
-        <li *ngFor="let famoussong of famousSongs">
-            <button class="notifButton" type="button" (click)="getSongByID(famoussong._id)"><b>{{ famoussong.title }}</b> </button>
-            <p class="detail"><b>Artist:</b> {{ famoussong.artist }}</p>
-            <p class="detail"><b>Album:</b> {{ famoussong.album }}</p>
-            <p class="detail"><b>Track:</b> {{ famoussong.track }}</p>
-            <p class="detail"><b>Genre:</b> {{ famoussong.genre }}</p>
+    <ul *ngIf="famousSongs ">
+        <li *ngFor="let famoussong of famousSongs ">
+            <button class="notifButton " type="button " (click)="getSongByID(famoussong._id) "><b>{{ famoussong.title }}</b> </button>
+            <p class="detail "><b>Artist:</b> {{ famoussong.artist }}</p>
+            <p class="detail "><b>Album:</b> {{ famoussong.album }}</p>
+            <p class="detail "><b>Track:</b> {{ famoussong.track }}</p>
+            <p class="detail "><b>Genre:</b> {{ famoussong.genre }}</p>
         </li>
     </ul>
     <p>Song works!</p>
