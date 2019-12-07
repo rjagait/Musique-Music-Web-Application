@@ -8,7 +8,8 @@ const songsSchema = mongoose.Schema({
     track: { type: String, maxlength: 30 },
     genre: { type: String, maxlength: 30 },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reviews' }],
-    avgRating: { type: Number, required: true, default: 0 },
+    totalReviews: { type: Number, default: 0 },
+    avgRating: { type: Number, default: 0 },
     isHidden: { type: Number, required: true, default: 0 },
 }, { collection: 'Songs' });
 

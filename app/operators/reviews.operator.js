@@ -33,7 +33,8 @@ exports.addNewReview = function(req, res) {
  */
 exports.getReviewBySongID = function(req, res) {
     const id = req.params.id;
-    Reviews.findOne({ songid: id })
+    Reviews.find({ songid: id })
+        .populate('userid')
         .exec()
         .then(doc => {
             console.log(doc);

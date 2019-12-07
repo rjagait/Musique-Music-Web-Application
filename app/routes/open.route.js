@@ -5,13 +5,12 @@ const reviewOperator = require('../operators/reviews.operator');
 const userOperator = require('../operators/users.operator');
 
 // song
-router.get('/song', songOperator.getAllSongsForUser);
+router.get('/song/topn', songOperator.getTopnSongs);
 router.get('/song/:id', songOperator.getSongByID);
 router.get('/song/search/:str', songOperator.searchSongByAnyAttribute);
 
 // review
-// router.get('/review/:id', reviewOperator.getReviewBySongID);
-// router.get('/review', reviewOperator.getTopReviews);
+router.get('/review/:id', reviewOperator.getReviewBySongID);
 
 // user
 router.post('/user/login', userOperator.loginUser);

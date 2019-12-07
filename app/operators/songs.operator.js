@@ -1,4 +1,39 @@
 const Songs = require('../modules/songs.module');
+const Reviews = require('../modules/reviews.module');
+
+/**
+ * Get top n(10) songs for unauthenticated user
+ */
+exports.getTopnSongs = async function(req, res) {
+    var songs = await Songs.find();
+    for (var i = 0; i < songs.length; i++) {
+        try {
+            var reviews = await Reviews.find({ songid: songs[i]._id });
+            res2 = await Songs.update({ _id: songs[i]._id }, { $set: { totalReviews: reviews.length } });
+
+        } catch (err) {
+            res2 = await Songs.update({ _id: songs[i]._id }, { $set: { totalReviews: 0 } });
+        }
+    }
+
+    Songs
+        .find()
+        .sort('-totalReviews').limit(10)
+        .populate({ path: 'Reviews' })
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            if (docs.length > 0) {
+                res.status(200).json(docs);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
 
 /**
  * Get all songs for manager
@@ -107,11 +142,24 @@ exports.addNewSong = function(req, res) {
 /**
  * Get song by the SongID
  */
-exports.getSongByID = function(req, res) {
+exports.getSongByID = async function(req, res) {
     const id = req.params.id;
-    Songs.findById(id)
+    var reviews = await Reviews.find({ songid: id }).sort('-_id');
+    var reviewstopn = await Reviews.find({ songid: id }).sort('-_id').limit(2);
+
+    Songs.findOne({ _id: id })
+        .populate('reviews')
         .exec()
         .then(doc => {
+            var totalReviews = reviews.length;
+            doc.totalReviews = totalReviews;
+            doc.reviews = reviewstopn;
+
+            var sum = 0;
+            for (var i = 0; i < totalReviews; i++)
+                sum = sum + reviews[i].rating;
+            sum = sum / totalReviews;
+            doc.avgRating = sum;
             console.log(doc);
             if (doc) {
                 res.status(200).json(doc);
