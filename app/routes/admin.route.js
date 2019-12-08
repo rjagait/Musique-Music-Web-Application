@@ -20,8 +20,10 @@ router.get('/song', checkAuth.checkauthAdmin, songOperator.getAllSongs);
 // router.put('/playlist/updatedetails/:id', checkAuth.checkauthAdmin, playlistOperator.updatePlaylistDetailsByID);
 
 // user
-// router.put('/user/setmanager/:username', checkAuth.checkauthAdmin, userOperator.setAsManager);
-// router.put('/user/deactivate/:username', checkAuth.checkauthAdmin, userOperator.deactivateUser);
-// router.put('/user/activate/:username', checkAuth.checkauthAdmin, userOperator.activateUser);
+router.get('/user', checkAuth.checkauthAdmin, userOperator.getAllUsers);
+router.put('/user/setmanager/:username', checkAuth.checkauthAdmin, userOperator.setAsManager);
+router.put('/user/unsetmanager/:username', checkAuth.checkauthAdmin, userOperator.unsetAsManager);
+router.put('/user/deactivate/:username', checkAuth.checkauthAdmin, userOperator.deactivateUser);
+router.put('/user/activate/:username', checkAuth.checkauthAdmin, userOperator.activateUser);
 
 module.exports = router;

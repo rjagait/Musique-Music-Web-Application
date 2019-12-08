@@ -119,3 +119,17 @@
         }
     }
 }
+
+.notifButton {
+    background-color: rgb(0, 0, 0, 0.2);
+    text-decoration: none;
+    padding: 10px 15px;
+    position: relative;
+    display: inline-block;
+    border: none;
+    color: white;
+}
+
+.notifButton:hover {
+    background-color: rgb(0, 0, 0);
+}

@@ -15,14 +15,57 @@ export class LibadminComponent implements OnInit {
   songDetails: Object;
   songReviews: object;
 
+  allUsers: Object;
+
   constructor(
     private http: HttpClient,
     private _eventService: AdminEventsService
   ) {}
 
   ngOnInit() {
+    // Read all songs
     this._eventService.getAllSOngsForAdmin().subscribe(
-      res => (this.allSongs = res),
+      res => {
+        this.allSongs = res;
+        console.log(res);
+      },
+      err => alert(err.error.message)
+    );
+
+    // Read all users
+    this._eventService.getAllUsersForAdmin().subscribe(
+      res => {
+        this.allUsers = res;
+        console.log(res);
+      },
+      err => alert(err.error.message)
+    );
+  }
+
+  setUserManagerFE(username) {
+    this._eventService.setUserManager(username).subscribe(
+      res => console.log(res),
+      err => alert(err.error.message)
+    );
+  }
+
+  unsetUserManagerFE(username) {
+    this._eventService.unsetUserManager(username).subscribe(
+      res => console.log(res),
+      err => alert(err.error.message)
+    );
+  }
+
+  deactivateUserFE(username) {
+    this._eventService.deactivateUser(username).subscribe(
+      res => console.log(res),
+      err => alert(err.error.message)
+    );
+  }
+
+  activateUserFE(username) {
+    this._eventService.activateUser(username).subscribe(
+      res => console.log(res),
       err => alert(err.error.message)
     );
   }

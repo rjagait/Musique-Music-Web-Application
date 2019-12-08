@@ -224,6 +224,24 @@ exports.setAsManager = function(req, res) {
 };
 
 /**
+ * Unmark a user as manager, by manager role
+ */
+exports.unsetAsManager = function(req, res) {
+    const id = req.params.username;
+    Users.update({ username: id }, { $set: { isManager: "0" } }).exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
+
+/**
  * Deactivate an existing user, by manager role
  */
 exports.deactivateUser = function(req, res) {

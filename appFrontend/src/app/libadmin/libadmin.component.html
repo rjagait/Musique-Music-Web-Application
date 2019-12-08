@@ -51,6 +51,17 @@
 
     <div id="Users" class="tabcontent" style="display: none">
         <p>Users here.</p>
+        <ul *ngIf="allUsers ">
+            <li *ngFor="let allUser of allUsers ">
+                <p class="detail "><b>User:</b> {{ allUser.username }}</p>
+                <p class="detail "><b>Is Manager:</b> {{ allUser.isManager }}</p>
+                <p class="detail "><b>Is Deactivated:</b> {{ allUser.isDeactivated }}</p>
+                <button class="notifButton" *ngIf="allUser.isDeactivated" type="button" (click)="activateUserFE(allUser.username)"><b>Activate</b> </button>
+                <button class="notifButton" *ngIf="!allUser.isDeactivated" type="button" (click)="deactivateUserFE(allUser.username)"><b>Deactivate</b> </button>
+                <button class="notifButton" *ngIf="!allUser.isManager" type="button" (click)="setUserManagerFE(allUser.username)"><b>Set as Manager</b> </button>
+                <button class="notifButton" *ngIf="allUser.isManager" type="button" (click)="unsetUserManagerFE(allUser.username)"><b>Unset as Manager</b> </button>
+            </li>
+        </ul>
     </div>
 
 </div>

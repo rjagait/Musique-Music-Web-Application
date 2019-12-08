@@ -10,7 +10,29 @@ const openUrl = Config.apiURL + "/admin";
 export class AdminEventsService {
   constructor(private http: HttpClient) {}
 
+  // On init get all
   getAllSOngsForAdmin() {
     return this.http.get<any>(openUrl + "/song");
+  }
+
+  getAllUsersForAdmin() {
+    return this.http.get<any>(openUrl + "/user");
+  }
+
+  // Admin Modifying user
+  setUserManager(username) {
+    return this.http.put<any>(openUrl + "/user/setmanager/" + username, {});
+  }
+
+  unsetUserManager(username) {
+    return this.http.put<any>(openUrl + "/user/unsetmanager/" + username, {});
+  }
+
+  deactivateUser(username) {
+    return this.http.put<any>(openUrl + "/user/deactivate/" + username, {});
+  }
+
+  activateUser(username) {
+    return this.http.put<any>(openUrl + "/user/activate/" + username, {});
   }
 }
