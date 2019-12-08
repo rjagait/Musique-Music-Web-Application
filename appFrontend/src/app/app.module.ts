@@ -10,7 +10,6 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { SongsComponent } from './songs/songs.component';
-import { PlaylistsComponent } from './playlists/playlists.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { PlaylistsComponent } from './playlists/playlists.component';
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    SongsComponent,
-    PlaylistsComponent
+    SongsComponent
   ],
   imports: [
     BrowserModule,

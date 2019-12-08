@@ -5,4 +5,12 @@
         <p>So what are you waiting for?</p>
         <p>Hurry! Signup!</p>
     </div>
+    <form id="userDetailForm" action="/action_page.php" method="POST">
+        <h2>Start Using</h2>
+        <div class="container">
+            <button type="button" (click)="gotoLogin()" style="background-color: rgba(41, 172, 128, 0.644);">Login</button><br>
+            <button type="button" (click)="gotoSignup()" style="background-color: rgba(41, 172, 128, 0.815);">Signup</button><br>
+            <button type="button" (click)="gotoGuestUser()">Guest User</button><br>
+        </div>
+    </form>
 </div>
