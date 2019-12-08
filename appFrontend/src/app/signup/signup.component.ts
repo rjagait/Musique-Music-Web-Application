@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { Config } from '../app.config';
 
-const db = require("../../../../config/database");
-const openUrl = db.url + "/open";
+const openUrl = Config.apiURL + "/open";
 
 @Component({
   selector: "app-signup",

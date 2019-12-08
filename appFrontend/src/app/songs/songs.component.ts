@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { Config } from '../app.config';
 
-const db = require("../../../../config/database");
-const openUrl = db.url + "/open";
+const openUrl = Config.apiURL + "/open";
 
 @Component({
   selector: "app-songs",
@@ -44,7 +44,7 @@ export class SongsComponent implements OnInit {
   searchSong(Songname) {
     console.log("Searching by attribute");
     const regExName = /^[a-zA-Z0-9 àâçéèêëîïôûùüÿñæœ\',]*$/;
-    if (!Songname.match(regExName)) {
+    if (!Songname || !Songname.match(regExName)) {
       alert("Format not supported");
       return;
     }
@@ -82,7 +82,7 @@ export class SongsComponent implements OnInit {
           if (res.status == 200) {
             console.log(res);
             this.songDetails = res.body;
-            this.songReviews = res.body.reviews;
+            this.songReviews = res.body['reviews'];
             this.openNav();
           }
         },
@@ -132,6 +132,5 @@ export class SongsComponent implements OnInit {
    */
   closeNav() {
     document.getElementById("myNav").style.width = "0%";
-    document.getElementById("moreButton").style.display = "block";
   }
 }

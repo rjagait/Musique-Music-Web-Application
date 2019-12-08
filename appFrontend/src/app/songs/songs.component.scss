@@ -8,6 +8,13 @@
     background-size: cover;
     position: relative;
     font-family: Georgia, Cambria, "Times New Roman", serif;
+    .searchContainer {
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 20px;
+        position: relative;
+        left: 74%;
+    }
     .overlay {
         height: 100%;
         width: 0;
@@ -33,7 +40,6 @@
             }
             .left {
                 left: 0;
-                // background-color: rgba(13, 49, 37, 0.9);
             }
             .right {
                 right: 0;
@@ -88,12 +94,10 @@
 }
 
 .notifButton {
-    // float: right;
     background-color: rgb(0, 0, 0, 0.2);
     text-decoration: none;
     padding: 10px 15px;
     position: relative;
-    // max-width: 100px;
     display: inline-block;
     border: none;
     color: white;

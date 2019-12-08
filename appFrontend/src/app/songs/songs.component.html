@@ -14,6 +14,7 @@
             <div class="split right">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
                 <h2>Song Reviews</h2>
+                <p *ngIf="songReviews.length==0"> &#9785; No reviews yet...</p>
                 <ul *ngIf="songReviews ">
                     <li class='songReview' *ngFor="let songreview of songReviews ">
                         <p class="detail "><b>Review:</b> {{ songreview.review }}</p>
@@ -21,7 +22,7 @@
                         <p class="detail "><b>By:</b> {{ songreview.userid.username }}</p>
                     </li>
                 </ul>
-                <button id='moreButton' class="notifButton" type="button " (click)="getAllReviews(songDetails._id) "> More... </button>
+                <button *ngIf="songReviews['length']" id='moreButton' class="notifButton" type="button " (click)="getAllReviews(songDetails._id) "> More... </button>
             </div>
         </div>
     </div>
