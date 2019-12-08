@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Config } from '../app.config';
+import { Config } from "../app.config";
+import { AdminEventsService } from "../admin-events.service";
 
 const openUrl = Config.apiURL + "/open";
 
@@ -13,45 +14,32 @@ export class LibadminComponent implements OnInit {
   allSongs: Object;
   songDetails: Object;
   songReviews: object;
-  
-  constructor(private http: HttpClient) {}
+
+  constructor(
+    private http: HttpClient,
+    private _eventService: AdminEventsService
+  ) {}
 
   ngOnInit() {
-    // Get top 10 songs
-    console.log("Get top songs on init");
-    this.http
-      .get(openUrl + "/song/topn", {
-        observe: "response"
-      })
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            this.allSongs = res.body;
-          }
-        },
-        err => {
-          console.log(err);
-          alert(err.error.message);
-        }
-      );
+    this._eventService.getAllSOngsForAdmin().subscribe(
+      res => (this.allSongs = res),
+      err => alert(err.error.message)
+    );
   }
 
   songsLib() {
-    this.openCity("Songs");
+    this.openTab("Songs");
   }
 
   playlistsLib() {
-    this.openCity("Playlists");
-    // rjagait: pending all actions
-  }
-  
-  usersLib() {
-    this.openCity("Users");
-    // rjagait: pending all actions
+    this.openTab("Playlists");
   }
 
-  openCity(blockName) {
+  usersLib() {
+    this.openTab("Users");
+  }
+
+  openTab(blockName) {
     var i, tabcontent;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -60,28 +48,6 @@ export class LibadminComponent implements OnInit {
     document.getElementById(blockName).style.display = "block";
   }
 
-  // Get top 10 songs
-  getAllSongs() {
-    console.log("Get top songs on init");
-    this.http
-      .get(openUrl + "/song/topn", {
-        observe: "response"
-      })
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            this.allSongs = res.body;
-          }
-        },
-        err => {
-          console.log(err);
-          alert(err.error.message);
-        }
-      );
-  }
-
-  
   /**
    * Search song by ID
    * @param SongID Song _id in songs table
@@ -97,7 +63,7 @@ export class LibadminComponent implements OnInit {
           if (res.status == 200) {
             console.log(res);
             this.songDetails = res.body;
-            this.songReviews = res.body['reviews'];
+            this.songReviews = res.body["reviews"];
             this.openNav();
           }
         },
@@ -133,7 +99,6 @@ export class LibadminComponent implements OnInit {
       );
   }
 
-  
   /**
    * Controls the display of show song details
    * Show
@@ -149,5 +114,4 @@ export class LibadminComponent implements OnInit {
   closeNav() {
     document.getElementById("myNav").style.width = "0%";
   }
-
 }

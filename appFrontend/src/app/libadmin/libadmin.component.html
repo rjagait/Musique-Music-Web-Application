@@ -34,7 +34,6 @@
     </div>
 
     <div id="Songs" class="tabcontent">
-        <p>Songs here.</p>
         <ul *ngIf="allSongs ">
             <li *ngFor="let allSong of allSongs ">
                 <button class="notifButton " type="button " (click)="getSongByID(allSong._id) "><b>{{ allSong.title }}</b> </button>

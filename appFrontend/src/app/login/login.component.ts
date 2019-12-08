@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
-import { Config } from '../app.config';
+import { Config } from "../app.config";
+import { AuthService } from "../auth.service";
 
 const openUrl = Config.apiURL + "/open";
 
@@ -12,8 +13,12 @@ const openUrl = Config.apiURL + "/open";
 })
 export class LoginComponent implements OnInit {
   message: Object;
-
-  constructor(private http: HttpClient, private router: Router) {}
+  loginUserData = {};
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private _auth: AuthService
+  ) {}
 
   ngOnInit() {}
 
@@ -24,48 +29,27 @@ export class LoginComponent implements OnInit {
     this.router.navigate(["signup"]);
   }
 
-  /**
-   * Page to login to the website
-   * @param Username email ID of the user
-   * @param Password password set by user
-   */
-  userLogin(Username, Password) {
-    const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (!Username.match(regExEmail)) {
-      alert("Expected email, found " + Username);
-      return;
-    }
-
-    this.http
-      .post(
-        openUrl + "/user/login",
-        {
-          username: Username,
-          password: Password
-        },
-        { observe: "response" }
-      )
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            alert("Login Success");
+  userLogin() {
+    this._auth.userLogin(this.loginUserData).subscribe(
+      res => {
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("username", res.username);
+        localStorage.setItem("userid", res.userid);
+        this.router.navigate(["libadmin"]);
+      },
+      err => {
+        switch (err.error.message) {
+          case "User doesn't exist": {
+            //rjagait: username does't exist, please signup
+            this.gotoSignup();
+            break;
           }
-        },
-        err => {
-          console.log(err);
-          switch (err.error.message) {
-            case "User doesn't exist": {
-              //rjagait: username does't exist, please signup
-              this.gotoSignup();
-              break;
-            }
-            default: {
-              alert(err.error.message);
-              break;
-            }
+          default: {
+            alert(err.error.message);
+            break;
           }
         }
-      );
+      }
+    );
   }
 }

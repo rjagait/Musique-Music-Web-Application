@@ -6,7 +6,7 @@ const songOperator = require('../operators/songs.operator');
 const checkAuth = require('../middleware/checkauth');
 
 // song
-// router.get('/song', checkAuth.checkauthAdmin, songOperator.getAllSongs);
+router.get('/song', checkAuth.checkauthAdmin, songOperator.getAllSongs);
 // router.post('/song', checkAuth.checkauthAdmin, songOperator.addNewSong);
 // router.put('/song/:id', checkAuth.checkauthAdmin, songOperator.updateSongDetailsByID);
 // router.delete('/song/:id', checkAuth.checkauthAdmin, songOperator.deleteSong);

@@ -38,7 +38,9 @@ exports.loginUser = async function(req, res) {
             });
         return res.status(200).json({
             message: 'Authentication Success',
-            token: token
+            token: token,
+            username: user.username,
+            userid: user._id
         })
     }
 };
