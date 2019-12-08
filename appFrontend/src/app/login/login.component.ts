@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(
         res => {
-          console.log(res);
           if (res.status == 200) {
             console.log(res);
             alert("Login Success");

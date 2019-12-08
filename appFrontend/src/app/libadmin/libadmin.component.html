@@ -1,0 +1,57 @@
+<div class=libadmin>
+    <div id="myNav" class="overlay">
+        <div class="overlay-content" *ngIf="songDetails ">
+            <div class="split left">
+                <h2>Song Details</h2>
+                <p><b>{{ songDetails.title }}</b></p>
+                <p><b>Artist: </b>{{ songDetails.title }}</p>
+                <p><b>Album: </b>{{ songDetails.album }}</p>
+                <p><b>Track: </b>{{ songDetails.track }}</p>
+                <p><b>Genre: </b>{{ songDetails.genre }}</p>
+                <p><b>No of Reviews: </b>{{ songDetails.totalReviews }}</p>
+                <p><b>Average Rating: </b>{{ songDetails.avgRating }}</p>
+            </div>
+            <div class="split right">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+                <h2>Song Reviews</h2>
+                <p *ngIf="songReviews.length==0"> &#9785; No reviews yet...</p>
+                <ul *ngIf="songReviews ">
+                    <li class='songReview' *ngFor="let songreview of songReviews ">
+                        <p class="detail "><b>Review:</b> {{ songreview.review }}</p>
+                        <p class="detail "><b>Rating:</b> {{ songreview.rating }}</p>
+                        <p class="detail "><b>By:</b> {{ songreview.userid.username }}</p>
+                    </li>
+                </ul>
+                <button *ngIf="songReviews['length']" id='moreButton' class="notifButton" type="button " (click)="getAllReviews(songDetails._id) "> More... </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab">
+        <button class="tablinks" (click)="songsLib()">Songs</button>
+        <button class="tablinks" (click)="playlistsLib()">Playlists</button>
+        <button class="tablinks" (click)="usersLib()">Users</button>
+    </div>
+
+    <div id="Songs" class="tabcontent">
+        <p>Songs here.</p>
+        <ul *ngIf="allSongs ">
+            <li *ngFor="let allSong of allSongs ">
+                <button class="notifButton " type="button " (click)="getSongByID(allSong._id) "><b>{{ allSong.title }}</b> </button>
+                <p class="detail "><b>Artist:</b> {{ allSong.artist }}</p>
+                <p class="detail "><b>Album:</b> {{ allSong.album }}</p>
+                <p class="detail "><b>Track:</b> {{ allSong.track }}</p>
+                <p class="detail "><b>Genre:</b> {{ allSong.genre }}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div id="Playlists" class="tabcontent" style="display: none">
+        <p>Playlists here.</p>
+    </div>
+
+    <div id="Users" class="tabcontent" style="display: none">
+        <p>Users here.</p>
+    </div>
+
+</div>

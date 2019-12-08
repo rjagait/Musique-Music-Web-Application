@@ -1,0 +1,121 @@
+/* Styling the libadmin page */
+
+.libadmin {
+    background-image: url("../images/background6.jpg");
+    min-height: 564px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    font-family: Georgia, Cambria, "Times New Roman", serif;
+    .overlay {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        overflow-x: hidden;
+        transition: 0.5s;
+        background-color: rgba(13, 49, 37, 0.9);
+        .overlay-content {
+            position: relative;
+            top: 10%;
+            width: 100%;
+            .split {
+                min-height: 540px;
+                width: 50%;
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                overflow-x: hidden;
+                padding-top: 20px;
+            }
+            .left {
+                left: 0;
+            }
+            .right {
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.2);
+                .closebtn {
+                    position: absolute;
+                    top: 20px;
+                    right: 45px;
+                    font-size: 60px;
+                }
+            }
+        }
+        h2,
+        p {
+            padding: 8px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+    }
+    .tab {
+        float: left;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        width: 20%;
+        height: 560px;
+        button {
+            display: block;
+            background-color: inherit;
+            color: black;
+            padding: 22px 16px;
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        button.active {
+            background-color: #ccc;
+        }
+    }
+    .tabcontent {
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid #ccc;
+        width: 77%;
+        border-left: none;
+        height: 560px;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        li {
+            background: rgba(250, 244, 215, 0.856);
+            padding: 1em;
+            margin-right: 10px;
+            width: 20%;
+            margin-bottom: 1em;
+            display: flex;
+            flex-direction: column;
+            p {
+                margin: 0;
+            }
+            p.name {
+                font-weight: bold;
+                font-size: 1rem;
+            }
+            p.detail {
+                font-size: 0.8rem;
+            }
+        }
+        .songReview {
+            margin-left: 10%;
+            width: 70%;
+            background: rgba(250, 244, 215, 0.4);
+        }
+    }
+}

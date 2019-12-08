@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SongsComponent } from './songs/songs.component';
+import { LibadminComponent } from './libadmin/libadmin.component';
 
 // Add new frontend routes here
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'songs', component: SongsComponent },
+  { path: 'libadmin', component: LibadminComponent },
 ];
 
 @NgModule({
