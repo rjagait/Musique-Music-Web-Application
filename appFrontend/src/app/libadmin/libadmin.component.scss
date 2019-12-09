@@ -8,6 +8,54 @@
     background-size: cover;
     position: relative;
     font-family: Georgia, Cambria, "Times New Roman", serif;
+    form {
+        position: absolute;
+        right: 35%;
+        margin: 20px;
+        max-width: 350px;
+        padding: 16px;
+        background-color: rgb(0, 0, 0, 0.5);
+        ;
+        border: 3px solid #f3ecec;
+        text-align: center;
+        width: 30%;
+        align-items: center;
+        div {
+            padding: 16px;
+            label {
+                color: white;
+                font-weight: normal;
+            }
+            input[type=password],
+            input[type=email] {
+                width: 80%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid rgb(181, 181, 181);
+                box-sizing: border-box;
+            }
+            button {
+                background-color: rgb(41, 172, 128);
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                width: 80%;
+            }
+            button:hover {
+                opacity: 0.8;
+            }
+            a {
+                padding-top: 16px;
+                font-size: medium;
+            }
+        }
+        .container2 {
+            background-color: rgb(0, 0, 0, 0.5);
+        }
+    }
     .overlay {
         height: 100%;
         width: 0;
@@ -30,9 +78,16 @@
                 top: 0;
                 overflow-x: hidden;
                 padding-top: 20px;
+                text-align: center;
             }
             .left {
                 left: 0;
+                div {
+                    background-color: rgba(0, 0, 0, 0.2);
+                    width: 50%;
+                    position: relative;
+                    left: 25%;
+                }
             }
             .right {
                 right: 0;
@@ -98,7 +153,8 @@
             padding: 1em;
             margin-right: 10px;
             width: 20%;
-            margin-bottom: 1em;
+            margin-bottom: 0.5em;
+            margin-top: 0.5em;
             display: flex;
             flex-direction: column;
             p {
@@ -128,6 +184,8 @@
     display: inline-block;
     border: none;
     color: white;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
 }
 
 .notifButton:hover {

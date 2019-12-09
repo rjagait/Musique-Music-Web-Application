@@ -1,46 +1,69 @@
 <div class=libadmin>
     <div id="myNav" class="overlay">
         <div class="overlay-content" *ngIf="songDetails ">
-            <div class="split left">
-                <h2>Song Details</h2>
-                <p><b>{{ songDetails.title }}</b></p>
-                <p><b>Artist: </b>{{ songDetails.title }}</p>
-                <p><b>Album: </b>{{ songDetails.album }}</p>
-                <p><b>Track: </b>{{ songDetails.track }}</p>
-                <p><b>Genre: </b>{{ songDetails.genre }}</p>
-                <p><b>No of Reviews: </b>{{ songDetails.totalReviews }}</p>
-                <p><b>Average Rating: </b>{{ songDetails.avgRating }}</p>
-            </div>
-            <div class="split right">
-                <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-                <h2>Song Reviews</h2>
-                <p *ngIf="songReviews.length==0"> &#9785; No reviews yet...</p>
-                <ul *ngIf="songReviews ">
-                    <li class='songReview' *ngFor="let songreview of songReviews ">
-                        <p class="detail "><b>Review:</b> {{ songreview.review }}</p>
-                        <p class="detail "><b>Rating:</b> {{ songreview.rating }}</p>
-                        <p class="detail "><b>By:</b> {{ songreview.userid.username }}</p>
-                    </li>
-                </ul>
-                <button *ngIf="songReviews['length']" id='moreButton' class="notifButton" type="button " (click)="getAllReviews(songDetails._id) "> More... </button>
-            </div>
+            <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+            <form id="userDetailForm" action="/action_page.php" method="POST">
+                <h2>Edit Details</h2>
+                <div class="container">
+                    <label for="title"><b>Title</b></label><br>
+                    <input type="text" [(ngModel)]="songDetails.title" id="title" placeholder="songDetails.title" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
+                    <label for="artist"><b>Artist</b></label><br>
+                    <input type="text" [(ngModel)]="songDetails.artist" placeholder="songDetails.artist" name="artist" required><br>
+                    <label for="album"><b>Album</b></label><br>
+                    <input type="text" [(ngModel)]="songDetails.album" placeholder="songDetails.album" name="album" required><br>
+                    <label for="track"><b>Track</b></label><br>
+                    <input type="text" [(ngModel)]="songDetails.track" placeholder="songDetails.track" name="track" required><br>
+                    <label for="Genre"><b>Genre</b></label><br>
+                    <input type="text" [(ngModel)]="songDetails.genre" placeholder="songDetails.genre" name="genre" required><br>
+                    <button type="button" (click)="updateSongDetailsFE(songDetails._id)">Update</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="myNewNav" class="overlay">
+        <div class="overlay-content">
+            <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
+            <form id="userDetailForm" action="/action_page.php" method="POST">
+                <h2>Edit Details</h2>
+                <div class="container">
+                    <label for="title"><b>Title</b></label><br>
+                    <input type="text" [(ngModel)]="newTitle" id="title" placeholder="Enter your title here" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
+                    <label for="artist"><b>Artist</b></label><br>
+                    <input type="text" [(ngModel)]="newArtist" placeholder="Enter artist" name="artist" required><br>
+                    <label for="album"><b>Album</b></label><br>
+                    <input type="text" [(ngModel)]="newAlbum" placeholder="Enter album" name="album" required><br>
+                    <label for="track"><b>Track</b></label><br>
+                    <input type="text" [(ngModel)]="newTrack" placeholder="Enter track" name="track" required><br>
+                    <label for="Genre"><b>Genre</b></label><br>
+                    <input type="text" [(ngModel)]="newGenre" placeholder="Enter genre" name="genre" required><br>
+                    <button type="button" (click)="addNewSongFE()">Update</button><br>
+                </div>
+            </form>
         </div>
     </div>
 
     <div class="tab">
-        <button class="tablinks" (click)="songsLib()">Songs</button>
-        <button class="tablinks" (click)="playlistsLib()">Playlists</button>
-        <button class="tablinks" (click)="usersLib()">Users</button>
+        <button class="tablinks" (click)="openTab('Songs')">Songs</button>
+        <button class="tablinks" (click)="openTab('Playlists')">Playlists</button>
+        <button class="tablinks" (click)="openTab('Users')">Users</button>
     </div>
 
     <div id="Songs" class="tabcontent">
+        <button class="notifButton" type="button" (click)="NavigateAddNewSong()"><b>&#65291;Add New Song</b> </button>
+        <!-- <p>.</p> -->
         <ul *ngIf="allSongs ">
             <li *ngFor="let allSong of allSongs ">
-                <button class="notifButton " type="button " (click)="getSongByID(allSong._id) "><b>{{ allSong.title }}</b> </button>
-                <p class="detail "><b>Artist:</b> {{ allSong.artist }}</p>
-                <p class="detail "><b>Album:</b> {{ allSong.album }}</p>
-                <p class="detail "><b>Track:</b> {{ allSong.track }}</p>
-                <p class="detail "><b>Genre:</b> {{ allSong.genre }}</p>
+                <p class="detail "><b>{{ allSong.title }}</b></p>
+                <p class="detail "><b>Artist:</b> {{ allSong.artist || "N/A" }}</p>
+                <p class="detail "><b>Album:</b> {{ allSong.album || "N/A" }}</p>
+                <p class="detail "><b>Track:</b> {{ allSong.track || "N/A" }}</p>
+                <p class="detail "><b>Genre:</b> {{ allSong.genre || "N/A" }}</p>
+                <p class="detail "><b>Is Hidden:</b> {{ allSong.isHidden }}</p>
+                <button class="notifButton" *ngIf="!allSong.isHidden" type="button" (click)="hideSongFE(allSong._id)"><b>Hide Song</b> </button>
+                <button class="notifButton" *ngIf="allSong.isHidden" type="button" (click)="unhideSongFE(allSong._id)"><b>Unhide Song</b> </button>
+                <button class="notifButton" type="button" (click)="getAndModifySongByID(allSong._id)"><b>Modify Song</b> </button>
+                <button class="notifButton" type="button" (click)="deleteSongByIdFE(allSong._id) "><b>Delete Song</b> </button>
             </li>
         </ul>
     </div>
@@ -50,16 +73,15 @@
     </div>
 
     <div id="Users" class="tabcontent" style="display: none">
-        <p>Users here.</p>
         <ul *ngIf="allUsers ">
             <li *ngFor="let allUser of allUsers ">
                 <p class="detail "><b>User:</b> {{ allUser.username }}</p>
                 <p class="detail "><b>Is Manager:</b> {{ allUser.isManager }}</p>
                 <p class="detail "><b>Is Deactivated:</b> {{ allUser.isDeactivated }}</p>
-                <button class="notifButton" *ngIf="allUser.isDeactivated" type="button" (click)="activateUserFE(allUser.username)"><b>Activate</b> </button>
-                <button class="notifButton" *ngIf="!allUser.isDeactivated" type="button" (click)="deactivateUserFE(allUser.username)"><b>Deactivate</b> </button>
-                <button class="notifButton" *ngIf="!allUser.isManager" type="button" (click)="setUserManagerFE(allUser.username)"><b>Set as Manager</b> </button>
-                <button class="notifButton" *ngIf="allUser.isManager" type="button" (click)="unsetUserManagerFE(allUser.username)"><b>Unset as Manager</b> </button>
+                <button class="notifButton" *ngIf="allUser.isDeactivated && allUser.username != self" type="button" (click)="activateUserFE(allUser.username)"><b>Activate</b> </button>
+                <button class="notifButton" *ngIf="!allUser.isDeactivated && allUser.username != self" type="button" (click)="deactivateUserFE(allUser.username)"><b>Deactivate</b> </button>
+                <button class="notifButton" *ngIf="!allUser.isManager && allUser.username != self" type="button" (click)="setUserManagerFE(allUser.username)"><b>Set as Manager</b> </button>
+                <button class="notifButton" *ngIf="allUser.isManager && allUser.username != self" type="button" (click)="unsetUserManagerFE(allUser.username)"><b>Unset as Manager</b> </button>
             </li>
         </ul>
     </div>

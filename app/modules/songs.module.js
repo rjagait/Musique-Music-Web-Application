@@ -10,7 +10,7 @@ const songsSchema = mongoose.Schema({
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reviews' }],
     totalReviews: { type: Number, default: 0 },
     avgRating: { type: Number, default: 0 },
-    isHidden: { type: Number, required: true, default: 0 },
+    isHidden: { type: Boolean, required: true, default: false },
 }, { collection: 'Songs' });
 
 module.exports = mongoose.model('Songs', songsSchema);
