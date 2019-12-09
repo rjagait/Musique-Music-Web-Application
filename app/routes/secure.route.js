@@ -7,14 +7,14 @@ const playlistOperator = require('../operators/playlists.operator');
 const checkAuth = require('../middleware/checkauth');
 
 // song
-// router.post('/song', checkAuth.checkauthUser, songOperator.addNewSong);
+router.post('/song', checkAuth.checkauthUser, songOperator.addNewSong);
 router.get('/song', checkAuth.checkauthUser, songOperator.getAllSongsForUser);
 // router.delete('/song/:id', checkAuth.checkauthUser, songOperator.deleteSong);
 // router.put('/song/:id', checkAuth.checkauthUser, songOperator.updateSongDetailsByID);
 // router.get('/song/search/:str', checkAuth.checkauthUser, songOperator.searchSongByAnyAttribute);
 
 // review
-// router.post('/review/:id', checkAuth.checkauthUser, reviewOperator.addNewReview);
+router.post('/review', checkAuth.checkauthUser, reviewOperator.addNewReview);
 
 // playlist
 // router.post('/playlist', checkAuth.checkauthUser, playlistOperator.addNewPlaylist);

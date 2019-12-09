@@ -221,11 +221,10 @@ export class LibadminComponent implements OnInit {
         res => console.log(res),
         err => alert(err.error.message)
       );
-    this.closeNav();
+    this.closeNewNav();
     setTimeout(() => {
       this.updateAllSongs();
     }, 500);
-    this.closeNewNav();
   }
 
   /**
@@ -233,10 +232,10 @@ export class LibadminComponent implements OnInit {
    * @param blockName name of the block to open
    */
   openTab(blockName) {
-    var i, tabcontent;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+    var i, lefttabcontent;
+    lefttabcontent = document.getElementsByClassName("lefttabcontent");
+    for (i = 0; i < lefttabcontent.length; i++) {
+      lefttabcontent[i].style.display = "none";
     }
     document.getElementById(blockName).style.display = "block";
   }

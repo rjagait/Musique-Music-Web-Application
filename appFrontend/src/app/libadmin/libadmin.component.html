@@ -43,8 +43,8 @@
     <!-- Block used to add details for a new song -->
     <div id="myNewNav" class="overlay">
         <div class="overlay-content">
-            <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
             <form id="userDetailForm" action="/action_page.php" method="POST">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
                 <h2>Add Details</h2>
                 <div class="container">
                     <label for="title"><b>Title</b></label><br>
@@ -66,7 +66,7 @@
     <!-- Block used to add details for a new playlist -->
     <div id="myNewPlaylistNav" class="overlay">
         <div class="overlay-content">
-            <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
+            <a href="javascript:void(0)" class="closebtn" (click)="closeNewPlaylistNav()">&times;</a>
             <form id="userDetailForm" action="/action_page.php" method="POST">
                 <h2>Add Details</h2>
                 <div class="container">
@@ -82,14 +82,14 @@
         </div>
     </div>
 
-    <div class="tab">
+    <div class="lefttab">
         <button class="tablinks" (click)="openTab('Songs')">Songs</button>
         <button class="tablinks" (click)="openTab('Playlists')">Playlists</button>
         <button class="tablinks" (click)="openTab('Users')">Users</button>
     </div>
 
-    <div id="Songs" class="tabcontent">
-        <button class="notifButton" type="button" (click)="NavigateAddNewPlaylist()"><b>&#65291;Add New Song</b> </button>
+    <div id="Songs" class="lefttabcontent">
+        <button class="notifButton" type="button" (click)="openNewNav()"><b>&#65291;Add New Song</b> </button>
         <ul *ngIf="allSongs ">
             <li *ngFor="let allSong of allSongs ">
                 <p class="detail "><b>{{ allSong.title }}</b></p>
@@ -106,7 +106,7 @@
         </ul>
     </div>
 
-    <div id="Playlists" class="tabcontent" style="display: none">
+    <div id="Playlists" class="lefttabcontent" style="display: none">
         <button class="notifButton" type="button" (click)="openNewPlaylistNav()"><b>&#65291;Add New Playlist</b> </button>
         <ul *ngIf="allPlaylists ">
             <li *ngFor="let allPlaylist of allPlaylists ">
@@ -119,7 +119,7 @@
         </ul>
     </div>
 
-    <div id="Users" class="tabcontent" style="display: none">
+    <div id="Users" class="lefttabcontent" style="display: none">
         <ul *ngIf="allUsers ">
             <li *ngFor="let allUser of allUsers ">
                 <p class="detail "><b>User:</b> {{ allUser.username }}</p>

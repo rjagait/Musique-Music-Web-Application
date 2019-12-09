@@ -1,12 +1,42 @@
-<div class=libsecure>
+<div class=headerblock>
 
-    <div class="tab">
+    <!-- Block used to add details for a new song -->
+    <div id="myNewNav" class="overlay">
+        <div class="overlay-content">
+            <form id="userDetailForm" action="/action_page.php" method="POST">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
+                <h2>Add Details</h2>
+                <div class="container">
+                    <label for="title"><b>Title*</b></label><br>
+                    <input type="text" [(ngModel)]="newTitle" id="title" placeholder="Enter your title here*" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
+                    <label for="artist"><b>Artist*</b></label><br>
+                    <input type="text" [(ngModel)]="newArtist" placeholder="Enter artist*" name="artist" required><br>
+                    <label for="album"><b>Album</b></label><br>
+                    <input type="text" [(ngModel)]="newAlbum" placeholder="Enter album" name="album"><br>
+                    <label for="track"><b>Track</b></label><br>
+                    <input type="text" [(ngModel)]="newTrack" placeholder="Enter track" name="track"><br>
+                    <label for="Genre"><b>Genre</b></label><br>
+                    <input type="text" [(ngModel)]="newGenre" placeholder="Enter genre" name="genre"><br>
+                </div>
+                <h2>Add Review</h2>
+                <div class="container">
+                    <label for="Review"><b>Review</b></label><br>
+                    <input type="text" [(ngModel)]="newReview" placeholder="Enter review" name="review"><br>
+                    <label for="Rating"><b>Rating</b></label><br>
+                    <input type="number" [(ngModel)]="newRating" placeholder="Enter rating" name="rating" min=0 max=5><br>
+                    <button type="button" (click)="addNewSongFE()">Update</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="lefttab">
         <button class="tablinks" (click)="openTab('Songs')">Songs</button>
         <button class="tablinks" (click)="openTab('Playlists')">Playlists</button>
     </div>
 
-    <div id="Songs" class="tabcontent">
-        <button class="notifButton" type="button" (click)="NavigateAddNewPlaylist()"><b>&#65291;Add New Song</b> </button>
+    <div id="Songs" class="lefttabcontent">
+        <button class="notifButton" type="button" (click)="openNewNav()"><b>&#65291;Add New Song</b> </button>
         <span class=searchContainer>
             <input class="notifButton " type="text " [(ngModel)]="songname " placeholder="Enter search text here " maxlength="100 " title="This search supports all attributes to search for songs " pattern='^[0-9a-zA-Z]*$' required><br>
             <button class="notifButton " type="button " (click)="searchSong(songname) "> &#8981; </button>
@@ -23,7 +53,7 @@
         </ul>
     </div>
 
-    <div id="Playlists" class="tabcontent" style="display: none">
+    <div id="Playlists" class="lefttabcontent" style="display: none">
         <button class="notifButton" type="button" (click)="openNewPlaylistNav()"><b>&#65291;Add New Playlist</b> </button>
         <ul *ngIf="allPlaylists ">
             <li *ngFor="let allPlaylist of allPlaylists ">

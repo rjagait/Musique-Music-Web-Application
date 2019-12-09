@@ -4,9 +4,8 @@ const Reviews = require('../modules/reviews.module');
  * Add a new review by a user/manager
  */
 exports.addNewReview = function(req, res) {
-    const id = req.params.id;
     const review = new Reviews({
-        songid: id,
+        songid: req.body.songid,
         userid: req.body.userid,
         review: req.body.review,
         rating: req.body.rating
