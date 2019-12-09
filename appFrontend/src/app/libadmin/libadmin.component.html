@@ -1,8 +1,10 @@
 <div class=libadmin>
+
+    <!-- Block used to edit the song details -->
     <div id="myNav" class="overlay">
         <div class="overlay-content" *ngIf="songDetails ">
-            <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
             <form id="userDetailForm" action="/action_page.php" method="POST">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
                 <h2>Edit Details</h2>
                 <div class="container">
                     <label for="title"><b>Title</b></label><br>
@@ -21,11 +23,29 @@
         </div>
     </div>
 
+    <!-- Block used to edit the plailist details -->
+    <div id="myPlaylistNav" class="overlay">
+        <div class="overlay-content" *ngIf="playListDetails">
+            <form id="userDetailForm" action="/action_page.php" method="POST">
+                <a href="javascript:void(0)" class="closebtn" (click)="closePlaylistNav()">&times;</a>
+                <h2>Edit Details</h2>
+                <div class="container">
+                    <label for="title"><b>Title</b></label><br>
+                    <input type="text" [(ngModel)]="playListDetails.title" id="title" placeholder="playListDetails.title" name="title" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
+                    <label for="description"><b>Description</b></label><br>
+                    <input type="text" [(ngModel)]="playListDetails.description" placeholder="playListDetails.description" name="description" required><br>
+                    <button type="button" (click)="updatePlaylistDetailsFE(playListDetails._id)">Update</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Block used to add details for a new song -->
     <div id="myNewNav" class="overlay">
         <div class="overlay-content">
             <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
             <form id="userDetailForm" action="/action_page.php" method="POST">
-                <h2>Edit Details</h2>
+                <h2>Add Details</h2>
                 <div class="container">
                     <label for="title"><b>Title</b></label><br>
                     <input type="text" [(ngModel)]="newTitle" id="title" placeholder="Enter your title here" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
@@ -43,6 +63,25 @@
         </div>
     </div>
 
+    <!-- Block used to add details for a new playlist -->
+    <div id="myNewPlaylistNav" class="overlay">
+        <div class="overlay-content">
+            <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
+            <form id="userDetailForm" action="/action_page.php" method="POST">
+                <h2>Add Details</h2>
+                <div class="container">
+                    <label for="title"><b>Title</b></label><br>
+                    <input type="text" [(ngModel)]="newTitle1" id="title" placeholder="Enter your title here" name="name" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
+                    <label for="description"><b>Description</b></label><br>
+                    <input type="text" [(ngModel)]="newDescription" placeholder="Enter description" name="description" required><br>
+                    <label for="username"><b>Username</b></label><br>
+                    <input type="text" [(ngModel)]="newUsername" placeholder="Enter user" name="username" required><br>
+                    <button type="button" (click)="addNewPlaylistFE()">Update</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="tab">
         <button class="tablinks" (click)="openTab('Songs')">Songs</button>
         <button class="tablinks" (click)="openTab('Playlists')">Playlists</button>
@@ -50,8 +89,7 @@
     </div>
 
     <div id="Songs" class="tabcontent">
-        <button class="notifButton" type="button" (click)="NavigateAddNewSong()"><b>&#65291;Add New Song</b> </button>
-        <!-- <p>.</p> -->
+        <button class="notifButton" type="button" (click)="NavigateAddNewPlaylist()"><b>&#65291;Add New Song</b> </button>
         <ul *ngIf="allSongs ">
             <li *ngFor="let allSong of allSongs ">
                 <p class="detail "><b>{{ allSong.title }}</b></p>
@@ -69,7 +107,16 @@
     </div>
 
     <div id="Playlists" class="tabcontent" style="display: none">
-        <p>Playlists here.</p>
+        <button class="notifButton" type="button" (click)="openNewPlaylistNav()"><b>&#65291;Add New Playlist</b> </button>
+        <ul *ngIf="allPlaylists ">
+            <li *ngFor="let allPlaylist of allPlaylists ">
+                <p class="detail "><b>{{ allPlaylist.title }}</b></p>
+                <p class="detail "><b>User:</b> {{ allPlaylist.username || "N/A" }}</p>
+                <p class="detail "><b>Desc:</b> {{ allPlaylist.description || "N/A" }}</p>
+                <button class="notifButton" type="button" (click)="getPlaylistByIDFE(allPlaylist._id)"><b>Modify Playlist</b> </button>
+                <button class="notifButton" type="button" (click)="deletePlaylistByIdFE(allPlaylist._id) "><b>Delete Playlist</b> </button>
+            </li>
+        </ul>
     </div>
 
     <div id="Users" class="tabcontent" style="display: none">

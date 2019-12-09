@@ -18,12 +18,20 @@ export class LibadminComponent implements OnInit {
   allUsers: Object;
   self: String;
 
+  allPlaylists: Object;
+  playListDetails: Object;
+
   // Attributes of new song
   newGenre: String;
   newTitle: String;
   newArtist: String;
   newAlbum: String;
   newTrack: String;
+
+  // Attributes of new Playlist
+  newTitle1: String;
+  newDescription: String;
+  newUsername: String;
 
   constructor(
     private http: HttpClient,
@@ -34,6 +42,7 @@ export class LibadminComponent implements OnInit {
   ngOnInit() {
     this.self = this._authService.getUsername();
     this.updateAllSongs();
+    this.updateAllPlaylists();
     this.updateAllUsers();
   }
 
@@ -51,6 +60,19 @@ export class LibadminComponent implements OnInit {
   }
 
   /**
+   * Load all playlists from db and display
+   */
+  updateAllPlaylists() {
+    this._eventService.getAllPlaylistsForAdmin().subscribe(
+      res => {
+        this.allPlaylists = res;
+        console.log(res);
+      },
+      err => alert(err.error.message)
+    );
+  }
+
+  /**
    * Load all users from db and display
    */
   updateAllUsers() {
@@ -61,7 +83,6 @@ export class LibadminComponent implements OnInit {
       },
       err => alert(err.error.message)
     );
-    console.log("Updated users");
   }
 
   /**
@@ -254,6 +275,12 @@ export class LibadminComponent implements OnInit {
   openNewNav() {
     document.getElementById("myNewNav").style.width = "100%";
   }
+  openPlaylistNav() {
+    document.getElementById("myPlaylistNav").style.width = "100%";
+  }
+  openNewPlaylistNav() {
+    document.getElementById("myNewPlaylistNav").style.width = "100%";
+  }
 
   /**
    * Controls the display of show song details
@@ -264,5 +291,73 @@ export class LibadminComponent implements OnInit {
   }
   closeNewNav() {
     document.getElementById("myNewNav").style.width = "0%";
+  }
+  closePlaylistNav() {
+    document.getElementById("myPlaylistNav").style.width = "0%";
+  }
+  closeNewPlaylistNav() {
+    document.getElementById("myNewPlaylistNav").style.width = "0%";
+  }
+
+  /**
+   * Delete the playlist from db
+   * @param playlistID _id of the playlist
+   */
+  deletePlaylistByIdFE(playlistID) {
+    this._eventService.deletePlaylistByID(playlistID).subscribe(
+      res => console.log(res),
+      err => alert(err.error.message)
+    );
+    setTimeout(() => {
+      this.updateAllPlaylists();
+    }, 500);
+  }
+
+  /**
+   * Get playlist details from db and display
+   */
+  getPlaylistByIDFE(playlistID) {
+    console.log("getting playlist: " + playlistID);
+    this._eventService.getPlaylistByID(playlistID).subscribe(
+      res => {
+        this.playListDetails = res;
+        console.log("Details read: " + res.title);
+      },
+      err => alert(err.error.message)
+    );
+    this.openPlaylistNav();
+  }
+
+  /**
+   * Edit and update the details of a playlist
+   * @param playlistID _id of the playlist
+   */
+  updatePlaylistDetailsFE(playlistID) {
+    this._eventService
+      .updatePlaylistDetails(playlistID, this.playListDetails)
+      .subscribe(
+        res => console.log(res),
+        err => alert(err.error.message)
+      );
+    this.closePlaylistNav();
+    setTimeout(() => {
+      this.updateAllPlaylists();
+    }, 500);
+  }
+
+  /**
+   * Add a new song in db
+   */
+  addNewPlaylistFE() {
+    this._eventService
+      .addNewPlaylist(this.newTitle1, this.newDescription, this.newUsername)
+      .subscribe(
+        res => console.log(res),
+        err => alert(err.error.message)
+      );
+    this.closeNewPlaylistNav();
+    setTimeout(() => {
+      this.updateAllPlaylists();
+    }, 500);
   }
 }

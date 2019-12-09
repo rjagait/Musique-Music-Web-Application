@@ -19,6 +19,10 @@ export class AdminEventsService {
     return this.http.get<any>(openUrl + "/user");
   }
 
+  getAllPlaylistsForAdmin() {
+    return this.http.get<any>(openUrl + "/playlist");
+  }
+
   // Admin Modifying user
   setUserManager(username) {
     return this.http.put<any>(openUrl + "/user/setmanager/" + username, {});
@@ -38,7 +42,6 @@ export class AdminEventsService {
 
   // Admin action on songs
   deleteSongByID(songID) {
-    console.log("Will delete song: " + songID);
     return this.http.delete<any>(openUrl + "/song/" + songID);
   }
 
@@ -67,6 +70,34 @@ export class AdminEventsService {
       artist: newArtist,
       album: newAlbum,
       track: newTrack
+    });
+  }
+
+  // Admin action on songs
+  deletePlaylistByID(playlistID) {
+    return this.http.delete<any>(openUrl + "/playlist/" + playlistID);
+  }
+
+  getPlaylistByID(playlistID) {
+    return this.http.get<any>(openUrl + "/playlist/" + playlistID);
+  }
+
+  updatePlaylistDetails(playlistID, playlistDetails) {
+    return this.http.put<any>(
+      openUrl + "/playlist/updatedetails/" + playlistID,
+      {
+        title: playlistDetails.title,
+        description: playlistDetails.description
+      }
+    );
+  }
+
+  addNewPlaylist(newTitle, newDesc, newUsername) {
+    console.log("Will add these details: " + newTitle + newDesc + newUsername);
+    return this.http.post<any>(openUrl + "/playlist", {
+      username: newUsername,
+      title: newTitle,
+      description: newDesc
     });
   }
 }

@@ -14,10 +14,11 @@ router.put('/song/hide/:id', checkAuth.checkauthAdmin, songOperator.hideSong);
 router.put('/song/unhide/:id', checkAuth.checkauthAdmin, songOperator.unhideSong);
 
 // playlist
-// router.post('/playlist', checkAuth.checkauthAdmin, playlistOperator.addNewPlaylist);
-// router.get('/playlist', checkAuth.checkauthAdmin, playlistOperator.getAllPlaylists);
-// router.delete('/playlist/:id', checkAuth.checkauthAdmin, playlistOperator.deletePlaylist);
-// router.put('/playlist/updatedetails/:id', checkAuth.checkauthAdmin, playlistOperator.updatePlaylistDetailsByID);
+router.post('/playlist', checkAuth.checkauthAdmin, playlistOperator.addNewPlaylistAdmin);
+router.get('/playlist', checkAuth.checkauthAdmin, playlistOperator.getAllPlaylists);
+router.get('/playlist/:id', checkAuth.checkauthAdmin, playlistOperator.getPlaylistByID);
+router.delete('/playlist/:id', checkAuth.checkauthAdmin, playlistOperator.deletePlaylist);
+router.put('/playlist/updatedetails/:id', checkAuth.checkauthAdmin, playlistOperator.updatePlaylistDetailsByID);
 
 // user
 router.get('/user', checkAuth.checkauthAdmin, userOperator.getAllUsers);

@@ -29,6 +29,33 @@ exports.addNewPlaylist = function(req, res) {
 };
 
 /**
+ * Adding a new playlist with madatory title by admin
+ */
+exports.addNewPlaylistAdmin = function(req, res) {
+    const playlist = new Playlists({
+        username: req.body.username,
+        title: req.body.title,
+        description: req.body.description,
+        isPublic: true
+    });
+    playlist
+        .save()
+        .then(result => {
+            console.log(result);
+            res.status(201).json({
+                message: 'POST REQUEST handling',
+                createdDetail: result
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
+
+/**
  * Return all playlists for manager login
  */
 exports.getAllPlaylists = function(req, res) {
@@ -46,6 +73,27 @@ exports.getAllPlaylists = function(req, res) {
             res.status(500).json({
                 error: err
             })
+        });
+};
+
+/**
+ * Get all playlists for auth user login
+ */
+exports.getPlaylistByID = function(req, res) {
+    const id = req.params.id;
+    Playlists.findOne({ $or: [{ _id: id }] })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({ message: 'No valid entry found' })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
         });
 };
 
