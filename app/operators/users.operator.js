@@ -40,7 +40,8 @@ exports.loginUser = async function(req, res) {
             message: 'Authentication Success',
             token: token,
             username: user.username,
-            userid: user._id
+            userid: user._id,
+            isManager: user.isManager,
         })
     }
 };

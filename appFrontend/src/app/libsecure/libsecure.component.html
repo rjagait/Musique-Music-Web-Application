@@ -1,0 +1,37 @@
+<div class=libsecure>
+
+    <div class="tab">
+        <button class="tablinks" (click)="openTab('Songs')">Songs</button>
+        <button class="tablinks" (click)="openTab('Playlists')">Playlists</button>
+    </div>
+
+    <div id="Songs" class="tabcontent">
+        <button class="notifButton" type="button" (click)="NavigateAddNewPlaylist()"><b>&#65291;Add New Song</b> </button>
+        <span class=searchContainer>
+            <input class="notifButton " type="text " [(ngModel)]="songname " placeholder="Enter search text here " maxlength="100 " title="This search supports all attributes to search for songs " pattern='^[0-9a-zA-Z]*$' required><br>
+            <button class="notifButton " type="button " (click)="searchSong(songname) "> &#8981; </button>
+        </span>
+        <ul *ngIf="allSongs ">
+            <li *ngFor="let allSong of allSongs ">
+                <p class="detail "><b>{{ allSong.title }}</b></p>
+                <p class="detail "><b>Artist:</b> {{ allSong.artist || "N/A" }}</p>
+                <p class="detail "><b>Album:</b> {{ allSong.album || "N/A" }}</p>
+                <p class="detail "><b>Track:</b> {{ allSong.track || "N/A" }}</p>
+                <p class="detail "><b>Genre:</b> {{ allSong.genre || "N/A" }}</p>
+                <p class="detail "><b>Is Hidden:</b> {{ allSong.isHidden }}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div id="Playlists" class="tabcontent" style="display: none">
+        <button class="notifButton" type="button" (click)="openNewPlaylistNav()"><b>&#65291;Add New Playlist</b> </button>
+        <ul *ngIf="allPlaylists ">
+            <li *ngFor="let allPlaylist of allPlaylists ">
+                <p class="detail "><b>{{ allPlaylist.title }}</b></p>
+                <p class="detail "><b>User:</b> {{ allPlaylist.username || "N/A" }}</p>
+                <p class="detail "><b>Desc:</b> {{ allPlaylist.description || "N/A" }}</p>
+            </li>
+        </ul>
+    </div>
+
+</div>

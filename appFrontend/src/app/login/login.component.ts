@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", res.token);
         localStorage.setItem("username", res.username);
         localStorage.setItem("userid", res.userid);
-        this.router.navigate(["libadmin"]);
+        console.log("isManager: " + res.isManager);
+        if (res.isManager) this.router.navigate(["libadmin"]);
+        else this.router.navigate(["libsecure"]);
       },
       err => {
         switch (err.error.message) {
