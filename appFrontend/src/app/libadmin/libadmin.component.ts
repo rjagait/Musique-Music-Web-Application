@@ -180,7 +180,7 @@ export class LibadminComponent implements OnInit {
   /**
    * Open div to enter details to add new song
    */
-  NavigateAddNewSong(){
+  NavigateAddNewSong() {
     this.openNewNav();
   }
 
@@ -188,10 +188,18 @@ export class LibadminComponent implements OnInit {
    * Add a new song in db
    */
   addNewSongFE() {
-    this._eventService.addNewSong(this.newTitle, this.newGenre, this.newArtist, this.newAlbum, this.newTrack).subscribe(
-      res => console.log(res),
-      err => alert(err.error.message)
-    );
+    this._eventService
+      .addNewSong(
+        this.newTitle,
+        this.newGenre,
+        this.newArtist,
+        this.newAlbum,
+        this.newTrack
+      )
+      .subscribe(
+        res => console.log(res),
+        err => alert(err.error.message)
+      );
     this.closeNav();
     setTimeout(() => {
       this.updateAllSongs();
