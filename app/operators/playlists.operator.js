@@ -6,7 +6,7 @@ const Playlists = require('../modules/playlists.module');
 exports.addNewPlaylist = function(req, res) {
     const playlist = new Playlists({
         username: req.body.username,
-        playlistArray: req.body.playlistArray,
+        playlistArray: [],
         title: req.body.title,
         description: req.body.description,
         isPublic: req.body.isPublic
@@ -102,7 +102,28 @@ exports.getPlaylistByID = function(req, res) {
  */
 exports.getPlaylistByUsername = function(req, res) {
     const id = req.params.username;
-    Playlists.find({ $or: [{ username: id }, { isPublic: 1 }] })
+    Playlists.find({ $or: [{ username: id }, { isPublic: true }] })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({ message: 'No valid entry found' })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+};
+
+/**
+ * Get all playlists by auth user login
+ */
+exports.getPlaylistByOnlyUsername = function(req, res) {
+    const id = req.params.username;
+    Playlists.find({ $or: [{ username: id }] })
         .exec()
         .then(doc => {
             console.log(doc);
@@ -122,15 +143,11 @@ exports.getPlaylistByUsername = function(req, res) {
  * Search for playlist by name
  */
 exports.getPlaylistSearch = function(req, res) {
-    Playlists.find({ $or: [{ username: req.body.username }, { isPublic: 1 }] }).find({ title: { "$regex": req.body.title, "$options": "ix" } })
+    Playlists.find({ $or: [{ username: req.params.user }, { isPublic: true }] }).find({ title: { "$regex": req.params.str, "$options": "i" } })
         .exec()
         .then(doc => {
             console.log(doc);
-            if (doc) {
-                res.status(200).json(doc);
-            } else {
-                res.status(404).json({ message: 'No valid entry found' })
-            }
+            res.status(200).json(doc);
         })
         .catch(err => {
             console.log(err);
@@ -142,6 +159,7 @@ exports.getPlaylistSearch = function(req, res) {
  * Add songs to array in playlist
  */
 exports.addSongToPlaylist = function(req, res) {
+    console.log("I am checking logs");
     Playlists.update({ _id: req.body.id }, { $push: { playlistArray: req.body.songid } }).exec()
         .then(result => {
             console.log(result);

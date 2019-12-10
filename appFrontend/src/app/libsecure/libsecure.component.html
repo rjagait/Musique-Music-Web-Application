@@ -30,6 +30,58 @@
         </div>
     </div>
 
+    <!-- Block used to add review for a new song -->
+    <div id="myReviewNav" class="overlay">
+        <div class="overlay-content">
+            <form id="userDetailForm" action="/action_page.php" method="POST">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeReviewNav()">&times;</a>
+                <h2>Add Review</h2>
+                <div class="container">
+                    <label for="Review"><b>Review</b></label><br>
+                    <input type="text" [(ngModel)]="newReview" placeholder="Enter review" name="review"><br>
+                    <label for="Rating"><b>Rating*</b></label><br>
+                    <input type="number" [(ngModel)]="newRating" placeholder="Enter rating*" name="rating" min=0 max=5><br>
+                    <button type="button" (click)="reviewThisSong()">Update</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Block used to add a new playlist -->
+    <div id="myPlaylistNav" class="overlay">
+        <div class="overlay-content">
+            <form id="userDetailForm" action="/action_page.php" method="POST">
+                <a href="javascript:void(0)" class="closebtn" (click)="closePlaylistNav()">&times;</a>
+                <h2>Add Playlist</h2>
+                <div class="container">
+                    <label for="Title"><b>Title</b></label><br>
+                    <input type="text" [(ngModel)]="newPlaylistTitle" placeholder="Enter title*" name="title"><br>
+                    <label for="Description"><b>Description</b></label><br>
+                    <input type="text" [(ngModel)]="newPlaylistDesc" placeholder="Enter description" name="description"><br>
+                    <label for="isPublic"><b>Mark Public?</b></label><br>
+                    <input type="text" [(ngModel)]="newPlaylistIsPublic" placeholder="true/false" name="ispublic"><br>
+                    <button type="button" (click)="addNewPlaylistFE()">Add</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Block used to add song to playlist -->
+    <div id="mySong2PlaylistNav" class="overlay">
+        <div class="overlay-content">
+            <form id="userDetailForm">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeSong2PlaylistNav()">&times;</a>
+                <h2>User Playlist</h2>
+                <ul *ngIf="allUserPlaylists ">
+                    <li *ngFor="let allUserPlaylist of allUserPlaylists ">
+                        <p class="detail "><b>{{ allUserPlaylist.title }}</b></p>
+                        <button class="notifButton" type="button" (click)="addSongToPlaylistFE(allUserPlaylist._id)"><b>Add</b> </button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
     <div class="lefttab">
         <button class="tablinks" (click)="openTab('Songs')">Songs</button>
         <button class="tablinks" (click)="openTab('Playlists')">Playlists</button>
@@ -48,13 +100,18 @@
                 <p class="detail "><b>Album:</b> {{ allSong.album || "N/A" }}</p>
                 <p class="detail "><b>Track:</b> {{ allSong.track || "N/A" }}</p>
                 <p class="detail "><b>Genre:</b> {{ allSong.genre || "N/A" }}</p>
-                <p class="detail "><b>Is Hidden:</b> {{ allSong.isHidden }}</p>
+                <button class="notifButton" type="button" (click)="getReviewofSong(allSong._id)"><b>Add Review</b> </button>
+                <button class="notifButton" type="button" (click)="getPlaylistsandDisplay(allSong._id)"><b>Add to Playlist</b> </button>
             </li>
         </ul>
     </div>
 
     <div id="Playlists" class="lefttabcontent" style="display: none">
-        <button class="notifButton" type="button" (click)="openNewPlaylistNav()"><b>&#65291;Add New Playlist</b> </button>
+        <button class="notifButton" type="button" (click)="openPlaylistNav()"><b>&#65291;Add New Playlist</b> </button>
+        <span class=searchContainer>
+            <input class="notifButton" type="text" [(ngModel)]="playlistname" placeholder="Enter search text here " maxlength="100" pattern='^[0-9a-zA-Z]*$' required><br>
+            <button class="notifButton" type="button" (click)="searchPlaylistFE(playlistname)"> &#8981; </button>
+        </span>
         <ul *ngIf="allPlaylists ">
             <li *ngFor="let allPlaylist of allPlaylists ">
                 <p class="detail "><b>{{ allPlaylist.title }}</b></p>

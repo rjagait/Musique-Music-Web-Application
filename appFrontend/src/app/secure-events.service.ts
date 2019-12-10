@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Config } from "./app.config";
 
 const secureUrl = Config.apiURL + "/secure";
@@ -16,8 +16,7 @@ export class SecureEventsService {
   }
 
   getAllPlaylistsForUser(username) {
-    console.log("URL used: " + secureUrl + "/playlist/" + username);
-    return this.http.get<any>(secureUrl + "/playlist/" + username);
+    return this.http.get<any>(secureUrl + "/playlist/byusername/" + username);
   }
 
   // Actions on Songs
@@ -31,14 +30,46 @@ export class SecureEventsService {
     });
   }
 
+  searchSongByAttribute(str) {
+    return this.http.get<any>(secureUrl + "/song/search/" + str);
+  }
+
   // Actions on reviews
   addNewReview(newSongID, newUser, newReview, newRating) {
-    console.log("Url generated: " + secureUrl + "/review");
     return this.http.post<any>(secureUrl + "/review", {
       songid: newSongID,
       userid: newUser,
       review: newReview,
       rating: newRating
     });
+  }
+
+  // Actions on playlists
+  addNewPlaylist(user, newTitle, newDesc, ispublic) {
+    return this.http.post<any>(secureUrl + "/playlist", {
+      username: user,
+      title: newTitle,
+      description: newDesc,
+      isPublic: ispublic ? true : false
+    });
+  }
+
+  addSongToPlaylist(playlistID, songID) {
+    return this.http.put<any>(secureUrl + "/playlist/addsong", {
+      id: playlistID,
+      songid: songID
+    });
+  }
+
+  searchPlaylist(user, str) {
+    return this.http.get<any>(
+      secureUrl + "/playlist/search/" + user + "/" + str
+    );
+  }
+
+  getAllPlaylistsForOnlyUser(username) {
+    return this.http.get<any>(
+      secureUrl + "/playlist/byonlyusername/" + username
+    );
   }
 }
