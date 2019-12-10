@@ -15,5 +15,6 @@ router.get('/review/:id', reviewOperator.getReviewBySongID);
 // user
 router.post('/user/login', userOperator.loginUser);
 router.post('/user/signup', userOperator.signupUser);
+router.get('/user/verify/:token', userOperator.verifyUser);
 
 module.exports = router;

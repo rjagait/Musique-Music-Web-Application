@@ -3,6 +3,8 @@ const argon2 = require('argon2');
 const randomstring = require('randomstring');
 const jwt = require('jsonwebtoken');
 const auth = require('../../config/auth');
+const sgMail = require('@sendgrid/mail');
+const db = require('../../config/database');
 
 /**
  * Add a new user to the auth users list
@@ -70,6 +72,22 @@ exports.signupUser = async function(req, res) {
                     .save()
                     .then(result => {
                         console.log(result);
+
+                        SENDGRID_API_KEY = db.sendgrid_key;
+                        verifurl = db.url + "/open/user/verify/" + token;
+                        // rjagait: change it to req.body.username
+                        emailto = 'rashjagait@gmail.com';
+
+                        sgMail.setApiKey(SENDGRID_API_KEY);
+                        const msg = {
+                            to: emailto,
+                            from: 'no-reply@musique.com',
+                            subject: 'Verification Email',
+                            text: 'Text',
+                            html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + verifurl,
+                        };
+                        sgMail.send(msg);
+
                         res.status(201).json({
                             message: 'POST REQUEST handling',
                             createdDetail: result
@@ -96,13 +114,13 @@ exports.signupUser = async function(req, res) {
  * TODO: add email verification
  */
 exports.verifyUser = async function(req, res) {
-    const user = await Users.findOne({ secretToken: req.body.secretToken });
+    const user = await Users.findOne({ secretToken: req.params.token });
     if (user == null || user.length < 1) {
         return res.status(401).json({
             message: "User doesn't exist"
         });
     }
-    Users.update({ secretToken: req.body.secretToken }, { $set: { isActive: true } }).exec()
+    Users.update({ secretToken: req.params.token }, { $set: { isActive: true } }).exec()
         .then(result => {
             console.log(result);
             res.status(200).json(result);
@@ -113,7 +131,6 @@ exports.verifyUser = async function(req, res) {
                 error: err
             })
         });
-
 };
 
 /**

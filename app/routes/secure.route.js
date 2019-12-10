@@ -26,7 +26,6 @@ router.put('/playlist/addsong', checkAuth.checkauthUser, playlistOperator.addSon
 // router.put('/playlist/updatedetails/:id', checkAuth.checkauthUser, playlistOperator.updatePlaylistDetailsByID);
 
 // user
-// router.post('/user/verify', checkAuth.checkauthUser, userOperator.verifyUser);
 // router.post('/user', checkAuth.checkauthUser, userOperator.addNewUser);
 // router.get('/user', checkAuth.checkauthUser, userOperator.getAllUsers);
 // router.get('/user/byid/:id', checkAuth.checkauthUser, userOperator.getUserByID);
