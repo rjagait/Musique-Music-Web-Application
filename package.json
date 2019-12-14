@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rjagait/ece9065-rjagait-project#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "argon2": "^0.25.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
