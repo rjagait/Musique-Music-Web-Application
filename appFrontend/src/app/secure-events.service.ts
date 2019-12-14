@@ -86,4 +86,11 @@ export class SecureEventsService {
       }
     );
   }
+
+  removeSongFromPlaylist(playlistID, songID) {
+    return this.http.put<any>(secureUrl + "/playlist/removesong", {
+      id: playlistID,
+      songid: songID
+    });
+  }
 }

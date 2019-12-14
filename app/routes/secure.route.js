@@ -23,7 +23,7 @@ router.get('/playlist/search/:user/:str', checkAuth.checkauthUser, playlistOpera
 router.get('/playlist/byid/:id', checkAuth.checkauthUser, playlistOperator.getPlaylistByID);
 router.put('/playlist/addsong', checkAuth.checkauthUser, playlistOperator.addSongToPlaylist);
 router.post('/playlist', checkAuth.checkauthUser, playlistOperator.addNewPlaylist);
-// router.put('/playlist/removesong', checkAuth.checkauthUser, playlistOperator.removeSongFromPlaylist);
+router.put('/playlist/removesong', checkAuth.checkauthUser, playlistOperator.removeSongFromPlaylist);
 router.put('/playlist/updatedetails/:id', checkAuth.checkauthUser, playlistOperator.updatePlaylistDetailsByID);
 
 // user

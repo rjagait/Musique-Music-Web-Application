@@ -345,4 +345,21 @@ export class LibsecureComponent implements OnInit {
       this.addSongToPlaylistFE(this.tempPlaylistID);
     }, 500);
   }
+
+  /**
+   * Add a new song to a user playlist in db
+   * @param playlistID ID of playlist
+   * @param songID ID of song
+   */
+  removeSongFromPlaylistFE(playlistID, songID) {
+    this._seventService.removeSongFromPlaylist(playlistID, songID).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => alert(err.error.message)
+    );
+    setTimeout(() => {
+      this.getPlaylistByIDFE(playlistID);
+    }, 500);
+  }
 }

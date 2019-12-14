@@ -98,6 +98,13 @@
                     <input type="text" [(ngModel)]="playListDetails.description" placeholder="playListDetails.description" name="description" required><br>
                     <button type="button" (click)="updatePlaylistDetailsFE(playListDetails._id)">Update</button><br>
                 </div>
+                <h2>List of Songs</h2>
+                <ul id="songsinplaylist" *ngIf="playListDetails.playlistArray">
+                    <li *ngFor="let playlistSong of playListDetails.playlistArray">
+                        <button class="notifButton" type="button" (click)="removeSongFromPlaylistFE(playListDetails._id, playlistSong._id)"><b>&times;</b> </button>
+                        <p class="detail"><b>{{ playlistSong.title }}</b></p>
+                    </li>
+                </ul>
             </form>
         </div>
     </div>

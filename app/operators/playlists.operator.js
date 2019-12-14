@@ -82,6 +82,7 @@ exports.getAllPlaylists = function(req, res) {
 exports.getPlaylistByID = function(req, res) {
     const id = req.params.id;
     Playlists.findOne({ $or: [{ _id: id }] })
+        .populate('playlistArray')
         .exec()
         .then(doc => {
             console.log(doc);
@@ -159,7 +160,6 @@ exports.getPlaylistSearch = function(req, res) {
  * Add songs to array in playlist
  */
 exports.addSongToPlaylist = function(req, res) {
-    console.log("I am checking logs");
     Playlists.update({ _id: req.body.id }, { $push: { playlistArray: req.body.songid } }).exec()
         .then(result => {
             console.log(result);
