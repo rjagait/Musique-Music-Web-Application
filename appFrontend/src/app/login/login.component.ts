@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       err => {
         switch (err.error.message) {
           case "User doesn't exist": {
-            //rjagait: username does't exist, please signup
+            alert(err.error.message + ". Please Signup first.");
             this.gotoSignup();
             break;
           }
