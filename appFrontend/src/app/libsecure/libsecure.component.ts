@@ -29,7 +29,13 @@ export class LibsecureComponent implements OnInit {
   newPlaylistDesc: String;
   newPlaylistIsPublic: String;
 
+  playListDetails: Object;
+
   songId: String;
+  tempPlaylistID: String;
+
+  // flags
+  addSong: Boolean;
 
   constructor(
     private _seventService: SecureEventsService,
@@ -39,6 +45,7 @@ export class LibsecureComponent implements OnInit {
   ngOnInit() {
     this.self = this._authService.getUsername();
     this.selfID = this._authService.getUserid();
+    this.addSong = false;
     this.updateAllSongs();
     this.updateAllPlaylists();
   }
@@ -86,34 +93,16 @@ export class LibsecureComponent implements OnInit {
    * Controls the display of show song details
    * Show
    */
-  openNewNav() {
-    document.getElementById("myNewNav").style.width = "100%";
-  }
-  openReviewNav() {
-    document.getElementById("myReviewNav").style.width = "100%";
-  }
-  openPlaylistNav() {
-    document.getElementById("myPlaylistNav").style.width = "100%";
-  }
-  openSong2PlaylistNav() {
-    document.getElementById("mySong2PlaylistNav").style.width = "100%";
+  openNav(id: string) {
+    document.getElementById(id).style.width = "100%";
   }
 
   /**
    * Controls the display of show song details
    * Hide
    */
-  closeNewNav() {
-    document.getElementById("myNewNav").style.width = "0%";
-  }
-  closeReviewNav() {
-    document.getElementById("myReviewNav").style.width = "0%";
-  }
-  closePlaylistNav() {
-    document.getElementById("myPlaylistNav").style.width = "0%";
-  }
-  closeSong2PlaylistNav() {
-    document.getElementById("mySong2PlaylistNav").style.width = "0%";
+  closeNav(id: string) {
+    document.getElementById(id).style.width = "0%";
   }
 
   /**
@@ -152,7 +141,7 @@ export class LibsecureComponent implements OnInit {
         err => alert(err.error.message)
       );
 
-    this.closeNewNav();
+    this.closeNav("myNewNav");
     setTimeout(() => {
       this.updateAllSongs();
     }, 500);
@@ -191,7 +180,7 @@ export class LibsecureComponent implements OnInit {
    */
   getReviewofSong(songID) {
     this.songId = songID;
-    this.openReviewNav();
+    this.openNav("myReviewNav");
   }
 
   /**
@@ -206,7 +195,7 @@ export class LibsecureComponent implements OnInit {
         },
         err => alert(err.error.message)
       );
-    this.closeReviewNav();
+    this.closeNav("myReviewNav");
     setTimeout(() => {
       this.updateAllSongs();
     }, 500);
@@ -253,11 +242,12 @@ export class LibsecureComponent implements OnInit {
       )
       .subscribe(
         res => {
+          this.tempPlaylistID = res.createdDetail._id;
           console.log(res);
         },
         err => alert(err.error.message)
       );
-    this.closePlaylistNav();
+    this.closeNav("myPlaylistNav");
     setTimeout(() => {
       this.updateAllPlaylists();
     }, 500);
@@ -265,12 +255,12 @@ export class LibsecureComponent implements OnInit {
 
   /**
    * Open dialog box to select playlist, and add songId
-   * @param songId ID of the song
+   * @param songID ID of the song
    */
   getPlaylistsandDisplay(songID) {
     this.songId = songID;
     this.updateAllPlaylistsOnly();
-    this.openSong2PlaylistNav();
+    this.openNav("mySong2PlaylistNav");
   }
 
   /**
@@ -288,6 +278,7 @@ export class LibsecureComponent implements OnInit {
 
   /**
    * Add a new song to a user playlist in db
+   * @param playlistID ID of the playlist
    */
   addSongToPlaylistFE(playlistID) {
     this._seventService.addSongToPlaylist(playlistID, this.songId).subscribe(
@@ -296,9 +287,62 @@ export class LibsecureComponent implements OnInit {
       },
       err => alert(err.error.message)
     );
-    this.closeSong2PlaylistNav();
+    this.closeNav("mySong2PlaylistNav");
     setTimeout(() => {
       this.updateAllPlaylists();
+    }, 500);
+  }
+
+  /**
+   * Get playlist details from db and display
+   */
+  getPlaylistByIDFE(playlistID) {
+    console.log("getting playlist: " + playlistID);
+    this._seventService.getPlaylistByID(playlistID).subscribe(
+      res => {
+        this.playListDetails = res;
+        console.log("Details read for: " + res.title);
+      },
+      err => alert(err.error.message)
+    );
+    this.openNav("myPlaylistEditNav");
+  }
+
+  /**
+   * Edit and update the details of a playlist
+   * @param playlistID _id of the playlist
+   */
+  updatePlaylistDetailsFE(playlistID) {
+    this._seventService
+      .updatePlaylistDetails(playlistID, this.playListDetails)
+      .subscribe(
+        res => console.log(res),
+        err => alert(err.error.message)
+      );
+    this.closeNav("myPlaylistEditNav");
+    setTimeout(() => {
+      this.updateAllPlaylists();
+    }, 500);
+  }
+
+  /**
+   * switch control to add new playlist, and
+   * turn on the 'addSong' flag to be used to add song to the playlist.
+   */
+  requestPlaylistDetails() {
+    this.addSong = true;
+    this.closeNav("mySong2PlaylistNav");
+    this.openNav("myPlaylistNav");
+  }
+
+  /**
+   * Add new playlist and add song to that playlist
+   */
+  addNewPlaylistNSongFE() {
+    this.addNewPlaylistFE();
+    this.addSong = false;
+    setTimeout(() => {
+      this.addSongToPlaylistFE(this.tempPlaylistID);
     }, 500);
   }
 }

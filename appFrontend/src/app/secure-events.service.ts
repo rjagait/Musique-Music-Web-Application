@@ -72,4 +72,18 @@ export class SecureEventsService {
       secureUrl + "/playlist/byonlyusername/" + username
     );
   }
+
+  getPlaylistByID(playlistID) {
+    return this.http.get<any>(secureUrl + "/playlist/byid/" + playlistID);
+  }
+
+  updatePlaylistDetails(playlistID, playlistDetails) {
+    return this.http.put<any>(
+      secureUrl + "/playlist/updatedetails/" + playlistID,
+      {
+        title: playlistDetails.title,
+        description: playlistDetails.description
+      }
+    );
+  }
 }

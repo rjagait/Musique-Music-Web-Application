@@ -4,7 +4,7 @@
     <div id="myNav" class="overlay">
         <div class="overlay-content" *ngIf="songDetails ">
             <form id="userDetailForm" action="/action_page.php" method="POST">
-                <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myNav')">&times;</a>
                 <h2>Edit Details</h2>
                 <div class="container">
                     <label for="title"><b>Title</b></label><br>
@@ -27,7 +27,7 @@
     <div id="myPlaylistNav" class="overlay">
         <div class="overlay-content" *ngIf="playListDetails">
             <form id="userDetailForm" action="/action_page.php" method="POST">
-                <a href="javascript:void(0)" class="closebtn" (click)="closePlaylistNav()">&times;</a>
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myPlaylistNav')">&times;</a>
                 <h2>Edit Details</h2>
                 <div class="container">
                     <label for="title"><b>Title</b></label><br>
@@ -44,7 +44,7 @@
     <div id="myNewNav" class="overlay">
         <div class="overlay-content">
             <form id="userDetailForm" action="/action_page.php" method="POST">
-                <a href="javascript:void(0)" class="closebtn" (click)="closeNewNav()">&times;</a>
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myNewNav')">&times;</a>
                 <h2>Add Details</h2>
                 <div class="container">
                     <label for="title"><b>Title</b></label><br>
@@ -66,7 +66,7 @@
     <!-- Block used to add details for a new playlist -->
     <div id="myNewPlaylistNav" class="overlay">
         <div class="overlay-content">
-            <a href="javascript:void(0)" class="closebtn" (click)="closeNewPlaylistNav()">&times;</a>
+            <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myNewPlaylistNav')">&times;</a>
             <form id="userDetailForm" action="/action_page.php" method="POST">
                 <h2>Add Details</h2>
                 <div class="container">
@@ -89,7 +89,7 @@
     </div>
 
     <div id="Songs" class="lefttabcontent">
-        <button class="notifButton" type="button" (click)="openNewNav()"><b>&#65291;Add New Song</b> </button>
+        <button class="notifButton" type="button" (click)="openNav('myNewNav')"><b>&#65291;Add New Song</b> </button>
         <ul *ngIf="allSongs ">
             <li *ngFor="let allSong of allSongs ">
                 <p class="detail "><b>{{ allSong.title }}</b></p>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="Playlists" class="lefttabcontent" style="display: none">
-        <button class="notifButton" type="button" (click)="openNewPlaylistNav()"><b>&#65291;Add New Playlist</b> </button>
+        <button class="notifButton" type="button" (click)="openNav('myNewPlaylistNav')"><b>&#65291;Add New Playlist</b> </button>
         <ul *ngIf="allPlaylists ">
             <li *ngFor="let allPlaylist of allPlaylists ">
                 <p class="detail "><b>{{ allPlaylist.title }}</b></p>

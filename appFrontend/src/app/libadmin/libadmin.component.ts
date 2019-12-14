@@ -192,7 +192,7 @@ export class LibadminComponent implements OnInit {
       res => console.log(res),
       err => alert(err.error.message)
     );
-    this.closeNav();
+    this.closeNav("myNav");
     setTimeout(() => {
       this.updateAllSongs();
     }, 500);
@@ -202,7 +202,7 @@ export class LibadminComponent implements OnInit {
    * Open div to enter details to add new song
    */
   NavigateAddNewSong() {
-    this.openNewNav();
+    this.openNav("myNewNav");
   }
 
   /**
@@ -221,7 +221,7 @@ export class LibadminComponent implements OnInit {
         res => console.log(res),
         err => alert(err.error.message)
       );
-    this.closeNewNav();
+    this.closeNav("myNewNav");
     setTimeout(() => {
       this.updateAllSongs();
     }, 500);
@@ -254,7 +254,7 @@ export class LibadminComponent implements OnInit {
           if (res.status == 200) {
             console.log(res);
             this.songDetails = res.body;
-            this.openNav();
+            this.openNav("myNav");
           }
         },
         err => {
@@ -268,34 +268,16 @@ export class LibadminComponent implements OnInit {
    * Controls the display of show song details
    * Show
    */
-  openNav() {
-    document.getElementById("myNav").style.width = "100%";
-  }
-  openNewNav() {
-    document.getElementById("myNewNav").style.width = "100%";
-  }
-  openPlaylistNav() {
-    document.getElementById("myPlaylistNav").style.width = "100%";
-  }
-  openNewPlaylistNav() {
-    document.getElementById("myNewPlaylistNav").style.width = "100%";
+  openNav(id: string) {
+    document.getElementById(id).style.width = "100%";
   }
 
   /**
    * Controls the display of show song details
    * Hide
    */
-  closeNav() {
-    document.getElementById("myNav").style.width = "0%";
-  }
-  closeNewNav() {
-    document.getElementById("myNewNav").style.width = "0%";
-  }
-  closePlaylistNav() {
-    document.getElementById("myPlaylistNav").style.width = "0%";
-  }
-  closeNewPlaylistNav() {
-    document.getElementById("myNewPlaylistNav").style.width = "0%";
+  closeNav(id: string) {
+    document.getElementById(id).style.width = "0%";
   }
 
   /**
@@ -324,7 +306,7 @@ export class LibadminComponent implements OnInit {
       },
       err => alert(err.error.message)
     );
-    this.openPlaylistNav();
+    this.openNav("myPlaylistNav");
   }
 
   /**
@@ -338,7 +320,7 @@ export class LibadminComponent implements OnInit {
         res => console.log(res),
         err => alert(err.error.message)
       );
-    this.closePlaylistNav();
+    this.closeNav("myPlaylistNav");
     setTimeout(() => {
       this.updateAllPlaylists();
     }, 500);
@@ -354,7 +336,7 @@ export class LibadminComponent implements OnInit {
         res => console.log(res),
         err => alert(err.error.message)
       );
-    this.closeNewPlaylistNav();
+    this.closeNav("myNewPlaylistNav");
     setTimeout(() => {
       this.updateAllPlaylists();
     }, 500);

@@ -17,13 +17,14 @@ router.get('/song/search/:str', checkAuth.checkauthUser, songOperator.searchSong
 router.post('/review', checkAuth.checkauthUser, reviewOperator.addNewReview);
 
 // playlist
-router.post('/playlist', checkAuth.checkauthUser, playlistOperator.addNewPlaylist);
 router.get('/playlist/byusername/:username', checkAuth.checkauthUser, playlistOperator.getPlaylistByUsername);
 router.get('/playlist/byonlyusername/:username', checkAuth.checkauthUser, playlistOperator.getPlaylistByOnlyUsername);
 router.get('/playlist/search/:user/:str', checkAuth.checkauthUser, playlistOperator.getPlaylistSearch);
+router.get('/playlist/byid/:id', checkAuth.checkauthUser, playlistOperator.getPlaylistByID);
 router.put('/playlist/addsong', checkAuth.checkauthUser, playlistOperator.addSongToPlaylist);
+router.post('/playlist', checkAuth.checkauthUser, playlistOperator.addNewPlaylist);
 // router.put('/playlist/removesong', checkAuth.checkauthUser, playlistOperator.removeSongFromPlaylist);
-// router.put('/playlist/updatedetails/:id', checkAuth.checkauthUser, playlistOperator.updatePlaylistDetailsByID);
+router.put('/playlist/updatedetails/:id', checkAuth.checkauthUser, playlistOperator.updatePlaylistDetailsByID);
 
 // user
 // router.post('/user', checkAuth.checkauthUser, userOperator.addNewUser);
