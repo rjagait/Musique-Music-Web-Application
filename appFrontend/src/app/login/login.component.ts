@@ -23,6 +23,34 @@ export class LoginComponent implements OnInit {
   gotoSignup() {
     this.router.navigate(["signup"]);
   }
+  
+  /**
+   * Controls the dialog box to resend email
+   * @param id id of the block show
+   */
+  openNav(id: string) {
+    document.getElementById(id).style.width = "100%";
+  }
+
+  /**
+   * Controls the dialog box to resend email
+   * @param id id of the block hide
+   */
+  closeNav(id: string) {
+    document.getElementById(id).style.width = "0%";
+  }
+
+  /**
+   * Request server to resend verification email
+   */
+  resendEmail(){
+    console.log("Will resend email to "+ this.loginUserData['username']);
+    this._auth.resendEmail(this.loginUserData['username']).subscribe(
+      res => alert("Verification email sent. please verify."),
+      err => alert(err.error.message)
+    );
+    this.closeNav("resendEmailNav");
+  }
 
   /**
    * Checks if user exists and check if password correct
@@ -43,6 +71,10 @@ export class LoginComponent implements OnInit {
           case "User doesn't exist": {
             alert(err.error.message + ". Please Signup first.");
             this.gotoSignup();
+            break;
+          }
+          case "Email not verified": {
+            this.openNav("resendEmailNav");
             break;
           }
           default: {

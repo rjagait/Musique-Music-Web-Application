@@ -3,7 +3,7 @@
     <!-- Block used to edit the song details -->
     <div id="myNav" class="overlay">
         <div class="overlay-content" *ngIf="songDetails ">
-            <form id="userDetailForm" action="/action_page.php" method="POST">
+            <form id="editSongFormAdmin" action="/action_page.php" method="POST">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myNav')">&times;</a>
                 <h2>Edit Details</h2>
                 <div class="container">
@@ -26,7 +26,7 @@
     <!-- Block used to edit the plailist details -->
     <div id="myPlaylistNav" class="overlay">
         <div class="overlay-content" *ngIf="playListDetails">
-            <form id="userDetailForm" action="/action_page.php" method="POST">
+            <form id="editPlaylistFormAdmin" action="/action_page.php" method="POST">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myPlaylistNav')">&times;</a>
                 <h2>Edit Details</h2>
                 <div class="container">
@@ -43,7 +43,7 @@
     <!-- Block used to add details for a new song -->
     <div id="myNewNav" class="overlay">
         <div class="overlay-content">
-            <form id="userDetailForm" action="/action_page.php" method="POST">
+            <form id="addSongFormAdmin" action="/action_page.php" method="POST">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myNewNav')">&times;</a>
                 <h2>Add Details</h2>
                 <div class="container">
@@ -67,7 +67,7 @@
     <div id="myNewPlaylistNav" class="overlay">
         <div class="overlay-content">
             <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myNewPlaylistNav')">&times;</a>
-            <form id="userDetailForm" action="/action_page.php" method="POST">
+            <form id="newPlaylistFormAdmin" action="/action_page.php" method="POST">
                 <h2>Add Details</h2>
                 <div class="container">
                     <label for="title"><b>Title</b></label><br>

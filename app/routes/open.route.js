@@ -14,6 +14,7 @@ router.get('/review/:id', reviewOperator.getReviewBySongID);
 
 // user
 router.get('/user/verify/:token', userOperator.verifyUser);
+router.get('/user/resendverify/:username', userOperator.resendVerifEmail);
 router.post('/user/login', userOperator.loginUser);
 router.post('/user/googlelogin/:username', userOperator.googleLoginUser);
 router.post('/user/signup', userOperator.signupUser);

@@ -3,7 +3,7 @@
     <!-- Block used to add details for a new song -->
     <div id="myNewNav" class="overlay">
         <div class="overlay-content">
-            <form id="newSongForm" action="/action_page.php" method="POST">
+            <form id="newSongFormAdmin" action="/action_page.php" method="POST">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myNewNav')">&times;</a>
                 <h2>Add Details</h2>
                 <div class="container">
@@ -33,7 +33,7 @@
     <!-- Block used to add review for a new song -->
     <div id="myReviewNav" class="overlay">
         <div class="overlay-content">
-            <form id="newReviewForm" action="/action_page.php" method="POST">
+            <form id="newReviewFormAdmin" action="/action_page.php" method="POST">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myReviewNav')">&times;</a>
                 <h2>Add Review</h2>
                 <div class="container">
@@ -50,7 +50,7 @@
     <!-- Block used to add a new playlist -->
     <div id="myPlaylistNav" class="overlay">
         <div class="overlay-content">
-            <form id="newPlaylistForm" action="/action_page.php" method="POST">
+            <form id="newPlaylistFormAdmin" action="/action_page.php" method="POST">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myPlaylistNav')">&times;</a>
                 <h2>Add Playlist</h2>
                 <div class="container">
@@ -71,7 +71,7 @@
     <!-- Block used to add song to playlist -->
     <div id="mySong2PlaylistNav" class="overlay">
         <div class="overlay-content">
-            <form id="newSong2PlaylistForm">
+            <form id="newSong2PlaylistFormAdmin">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('mySong2PlaylistNav')">&times;</a>
                 <h2>User Playlist</h2>
                 <ul *ngIf="allUserPlaylists ">
@@ -88,7 +88,7 @@
     <!-- Block used to edit the playlist details -->
     <div id="myPlaylistEditNav" class="overlay">
         <div class="overlay-content" *ngIf="playListDetails">
-            <form id="editPlaylistForm" action="/action_page.php" method="POST">
+            <form id="editPlaylistFormAdmin" action="/action_page.php" method="POST">
                 <a href="javascript:void(0)" class="closebtn" (click)="closeNav('myPlaylistEditNav')">&times;</a>
                 <h2>Edit Details</h2>
                 <div class="container">

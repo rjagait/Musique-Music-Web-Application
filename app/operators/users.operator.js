@@ -76,7 +76,7 @@ exports.loginUser = async function(req, res) {
         })
     } else if (!user.isActive) {
         return res.status(401).json({
-            message: "Email not verified, please verify the email first"
+            message: "Email not verified"
         })
     } else {
         const token = jwt.sign({
@@ -158,6 +158,44 @@ exports.signupUser = async function(req, res) {
 };
 
 /**
+ * Will verification email to the user
+ * Login user
+ */
+exports.resendVerifEmail = function(req, res) {
+    Users.findOne({ username: req.params.username })
+        .exec()
+        .then(user => {
+            console.log("Will resend email");
+            console.log(user);
+            SENDGRID_API_KEY = db.sendgrid_key;
+            verifurl = db.url + "/open/user/verify/" + user.secretToken;
+            // rjagait: change it to req.body.username
+            emailto = 'rashjagait@gmail.com';
+
+            sgMail.setApiKey(SENDGRID_API_KEY);
+            const msg = {
+                to: emailto,
+                from: 'no-reply@musique.com',
+                subject: 'Verification Email',
+                text: 'Text',
+                html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \n' + verifurl,
+            };
+            sgMail.send(msg);
+
+            res.status(201).json({
+                message: 'Verif email resent',
+                userDetail: user
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+};
+
+/**
  * Verify user and mark as active
  * TODO: add email verification
  */
@@ -165,13 +203,15 @@ exports.verifyUser = async function(req, res) {
     const user = await Users.findOne({ secretToken: req.params.token });
     if (user == null || user.length < 1) {
         return res.status(401).json({
-            message: "User doesn't exist"
+            message: "Invalid token!"
         });
     }
     Users.update({ secretToken: req.params.token }, { $set: { isActive: true } }).exec()
         .then(result => {
             console.log(result);
-            res.status(200).json(result);
+            res.status(200).json({
+                message: 'Email verified successfully.'
+            })
         })
         .catch(err => {
             console.log(err);

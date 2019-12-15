@@ -17,11 +17,9 @@
     },
     "homepage": "https://github.com/rjagait/ece9065-rjagait-project#readme",
     "dependencies": {
-        // "@angular/fire": "^5.2.3",
         "@sendgrid/mail": "^6.4.0",
         "argon2": "^0.25.1",
         "express": "^4.17.1",
-        // "firebase": "^7.6.0",
         "jsonwebtoken": "^8.5.1",
         "mongo-sanitize": "^1.0.1",
         "mongoose": "^5.7.13",

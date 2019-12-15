@@ -20,7 +20,22 @@ export class AuthService {
     private _sanitize: SanitizeService
   ) { }
 
+  private isEmpty(str: string) {
+    if (!str) {
+      return true;
+    }
+    return false;
+  }
+
   userLogin(user) {
+    if (this.isEmpty(user.username)) {
+      alert("Username not entered");
+      return;
+    }
+    if (this.isEmpty(user.password)) {
+      alert("Password not entered");
+      return;
+    }
     if (!this._sanitize.isEmail(user.username)) {
       return;
     }
@@ -28,6 +43,10 @@ export class AuthService {
       username: user.username,
       password: user.password
     });
+  }
+
+  resendEmail(Username) {
+    return this.http.get<any>(openUrl + "/user/resendverify/" + Username);
   }
 
   userSignup(Username, Password) {

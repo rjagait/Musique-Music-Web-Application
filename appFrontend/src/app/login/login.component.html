@@ -1,5 +1,16 @@
 <div class=headerblock id="UserDetails">
-    <form id="userDetailForm" action="/action_page.php" method="POST">
+    <div id="resendEmailNav" class="overlay">
+        <div class="overlay-content">
+            <form id="resendFormLogin" action="/action_page.php" method="POST">
+                <p>Email is not verified.</p>
+                <p>Resend verification email?</p>
+                <button type="button" class="notifButton" (click)="resendEmail()">Yes</button><br>
+                <button type="button" class="notifButton" (click)="closeNav('resendEmailNav')">No</button><br>
+            </form>
+        </div>
+    </div>
+
+    <form id="userDetailLoginForm" action="/action_page.php" method="POST">
         <h2>LOGIN</h2>
         <div class="container">
             <label for="name"><b>Username</b></label><br>
