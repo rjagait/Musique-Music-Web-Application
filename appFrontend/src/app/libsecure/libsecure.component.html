@@ -96,6 +96,8 @@
                     <input type="text" [(ngModel)]="playListDetails.title" id="title" placeholder="playListDetails.title" name="title" maxlength="100" title="Max length of 100 is alowed" pattern='^[0-9a-zA-Z]*$' required><br>
                     <label for="description"><b>Description</b></label><br>
                     <input type="text" [(ngModel)]="playListDetails.description" placeholder="playListDetails.description" name="description" required><br>
+                    <label for="ispublic"><b>Is Public?</b></label><br>
+                    <input type="text" [(ngModel)]="playListDetails.isPublic" placeholder="playListDetails.isPublic" name="ispublic" required><br>
                     <button type="button" (click)="updatePlaylistDetailsFE(playListDetails._id)">Update</button><br>
                 </div>
                 <h2>List of Songs</h2>

@@ -195,7 +195,7 @@ exports.removeSongFromPlaylist = function(req, res) {
  */
 exports.updatePlaylistDetailsByID = function(req, res) {
     const id = req.params.id;
-    Playlists.update({ _id: id }, { $set: { title: req.body.title, description: req.body.description } }).exec()
+    Playlists.update({ _id: id }, { $set: { title: req.body.title, description: req.body.description, isPublic: req.body.isPublic } }).exec()
         .then(result => {
             console.log(result);
             res.status(200).json(result);

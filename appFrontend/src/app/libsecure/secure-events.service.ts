@@ -106,7 +106,8 @@ export class SecureEventsService {
       secureUrl + "/playlist/updatedetails/" + playlistID,
       {
         title: playlistDetails.title,
-        description: playlistDetails.description
+        description: playlistDetails.description,
+        isPublic: playlistDetails.isPublic
       }
     );
   }
