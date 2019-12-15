@@ -31,6 +31,18 @@ export class AuthService {
     });
   }
 
+  userSignup(Username, Password) {
+    const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    if (!Username.match(regExEmail)) {
+      alert("Expected email, found " + Username);
+      return;
+    }
+    return this.http.post<any>(openUrl + "/user/signup", {
+      username: Username,
+      password: Password
+    });
+  }
+
   getToken() {
     return localStorage.getItem("token");
   }

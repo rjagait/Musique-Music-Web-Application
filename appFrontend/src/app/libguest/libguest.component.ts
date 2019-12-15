@@ -1,9 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { Config } from '../app.config';
-
-const openUrl = Config.apiURL + "/open";
+import { GuestEventsService } from './guest-events.service';
 
 @Component({
   selector: "app-songs",
@@ -15,56 +11,33 @@ export class LibguestComponent implements OnInit {
   famousSongs: Object;
   songDetails: Object;
   songReviews: object;
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private _eventService: GuestEventsService) { }
 
   ngOnInit() {
-    console.log("Get top songs on init");
-    // Get top 10 songs
-    this.http
-      .get(openUrl + "/song/topn", {
-        observe: "response"
-      })
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            this.famousSongs = res.body;
-          }
-        },
-        err => {
-          console.log(err);
-          alert(err.error.message);
-        }
-      );
+    this.getTopnSongsFE();
+  }
+
+  getTopnSongsFE() {
+    this._eventService.getTopnSongs().subscribe(
+      res => {
+        console.log(res);
+        this.famousSongs = res;
+      },
+      err => alert(err.error.message)
+    );
   }
 
   /**
    * Search song by a string for any attribute
    */
   searchSong(Songname) {
-    console.log("Searching by attribute");
-    const regExName = /^[a-zA-Z0-9 àâçéèêëîïôûùüÿñæœ\',]*$/;
-    if (!Songname || !Songname.match(regExName)) {
-      alert("Format not supported");
-      return;
-    }
-
-    this.http
-      .get(openUrl + "/song/search/" + Songname, {
-        observe: "response"
-      })
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            this.searchedSongs = res.body;
-          }
-        },
-        err => {
-          console.log(err);
-          alert(err.error.message);
-        }
-      );
+    this._eventService.searchSong(Songname).subscribe(
+      res => {
+        console.log(res);
+        this.searchedSongs = res;
+      },
+      err => alert(err.error.message)
+    );
   }
 
   /**
@@ -72,25 +45,17 @@ export class LibguestComponent implements OnInit {
    * @param SongID Song _id in songs table
    */
   getSongByID(SongID) {
-    console.log("Getting song by ID");
-    this.http
-      .get(openUrl + "/song/" + SongID, {
-        observe: "response"
-      })
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            this.songDetails = res.body;
-            this.songReviews = res.body['reviews'];
-            this.openNav();
-          }
-        },
-        err => {
-          console.log(err);
-          alert(err.error.message);
-        }
-      );
+    this._eventService.getSongByID(SongID).subscribe(
+      res => {
+        console.log(res);
+        console.log("Check below:");
+        console.log(res.reviews[0].userid.username);
+        this.songDetails = res;
+        this.songReviews = res['reviews'];
+        this.openNav();
+      },
+      err => alert(err.error.message)
+    );
   }
 
   /**
@@ -98,24 +63,16 @@ export class LibguestComponent implements OnInit {
    * @param SongID Song _id in songs table
    */
   getAllReviews(SongID) {
-    console.log("Getting reviews by ID");
-    this.http
-      .get(openUrl + "/review/" + SongID, {
-        observe: "response"
-      })
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            this.songReviews = res.body;
-            document.getElementById("moreButton").style.display = "none";
-          }
-        },
-        err => {
-          console.log(err);
-          alert(err.error.message);
-        }
-      );
+    this._eventService.getAllReviews(SongID).subscribe(
+      res => {
+        console.log(res);
+        console.log("Check below review:");
+        console.log(res[0].userid.username);
+        this.songReviews = res;
+        document.getElementById("moreButton").style.display = "none";
+      },
+      err => alert(err.error.message)
+    );
   }
 
   /**

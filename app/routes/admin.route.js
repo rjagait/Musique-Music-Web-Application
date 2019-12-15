@@ -7,8 +7,9 @@ const checkAuth = require('../middleware/checkauth');
 
 // song
 router.get('/song', checkAuth.checkauthAdmin, songOperator.getAllSongs);
+router.get('/song/:id', checkAuth.checkauthAdmin, songOperator.getSongByID);
 router.post('/song', checkAuth.checkauthAdmin, songOperator.addNewSong);
-router.put('/song/:id', checkAuth.checkauthAdmin, songOperator.updateSongDetailsByID);
+router.put('/song/update/:id', checkAuth.checkauthAdmin, songOperator.updateSongDetailsByID);
 router.delete('/song/:id', checkAuth.checkauthAdmin, songOperator.deleteSong);
 router.put('/song/hide/:id', checkAuth.checkauthAdmin, songOperator.hideSong);
 router.put('/song/unhide/:id', checkAuth.checkauthAdmin, songOperator.unhideSong);

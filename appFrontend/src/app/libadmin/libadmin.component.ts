@@ -1,10 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Config } from "../app.config";
 import { AdminEventsService } from "./admin-events.service";
 import { AuthService } from "../auth.service";
-
-const openUrl = Config.apiURL + "/open";
 
 @Component({
   selector: "app-libadmin",
@@ -34,10 +30,9 @@ export class LibadminComponent implements OnInit {
   newUsername: String;
 
   constructor(
-    private http: HttpClient,
     private _eventService: AdminEventsService,
     private _authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.self = this._authService.getUsername();
@@ -245,23 +240,14 @@ export class LibadminComponent implements OnInit {
    * @param SongID Song _id in songs table
    */
   getAndModifySongByID(SongID) {
-    this.http
-      .get(openUrl + "/song/" + SongID, {
-        observe: "response"
-      })
-      .subscribe(
-        res => {
-          if (res.status == 200) {
-            console.log(res);
-            this.songDetails = res.body;
-            this.openNav("myNav");
-          }
-        },
-        err => {
-          console.log(err);
-          alert(err.error.message);
-        }
-      );
+    this._eventService.getSongByID(SongID).subscribe(
+      res => {
+        console.log(res);
+        this.songDetails = res;
+        this.openNav("myNav");
+      },
+      err => alert(err.error.message)
+    );
   }
 
   /**

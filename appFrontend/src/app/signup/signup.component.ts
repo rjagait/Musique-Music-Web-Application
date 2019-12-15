@@ -1,9 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { Config } from '../app.config';
-
-const openUrl = Config.apiURL + "/open";
+import { AuthService } from "../auth.service";
 
 @Component({
   selector: "app-signup",
@@ -11,9 +8,9 @@ const openUrl = Config.apiURL + "/open";
   styleUrls: ["./signup.component.scss"]
 })
 export class SignupComponent implements OnInit {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router, private _auth: AuthService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    * Controls user signup
@@ -21,42 +18,25 @@ export class SignupComponent implements OnInit {
    * @param Password Password to be set
    */
   userSignup(Username, Password) {
-    const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (!Username.match(regExEmail)) {
-      alert("Expected email, found " + Username);
-      return;
-    }
-
-    this.http
-      .post(
-        openUrl + "/user/signup",
-        {
-          username: Username,
-          password: Password
-        },
-        { observe: "response" }
-      )
-      .subscribe(
-        res => {
-          console.log(res);
-          if (res.status == 201) {
-            alert("Signup Success");
+    this._auth.userSignup(Username, Password).subscribe(
+      res => {
+        alert("Signup Success, please verify email before logging in. Redirecting to login page.");
+        this.router.navigate(["login"]);
+      },
+      err => {
+        console.log(err);
+        switch (err.error.message) {
+          case "Username Exists": {
+            alert("Username exists, please login");
+            this.router.navigate(["login"]);
+            break;
           }
-        },
-        err => {
-          console.log(err);
-          switch (err.error.message) {
-            case "Username Exists": {
-              //rjagait: username exists, please login
-              this.router.navigate(["login"]);
-              break;
-            }
-            default: {
-              alert(err.error.message);
-              break;
-            }
+          default: {
+            alert(err.error.message);
+            break;
           }
         }
-      );
+      }
+    );
   }
 }
