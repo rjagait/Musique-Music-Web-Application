@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Config } from "../app.config";
-import { AdminEventsService } from "../admin-events.service";
+import { AdminEventsService } from "./admin-events.service";
 import { AuthService } from "../auth.service";
 
 const openUrl = Config.apiURL + "/open";

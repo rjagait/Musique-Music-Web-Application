@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Config } from "./app.config";
+import { Config } from "../app.config";
 
 const openUrl = Config.apiURL + "/admin";
 

@@ -16,9 +16,9 @@ import { SongsComponent } from "./songs/songs.component";
 import { LibadminComponent } from "./libadmin/libadmin.component";
 import { AuthService } from "./auth.service";
 import { TokenInterceptorService } from "./token-interceptor.service";
-import { AdminEventsService } from "./admin-events.service";
+import { AdminEventsService } from "./libadmin/admin-events.service";
 import { LibsecureComponent } from "./libsecure/libsecure.component";
-import { SecureEventsService } from "./secure-events.service";
+import { SecureEventsService } from "./libsecure/secure-events.service";
 
 import { Config } from './app.config';
 

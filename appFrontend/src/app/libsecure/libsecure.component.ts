@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../auth.service";
-import { SecureEventsService } from "../secure-events.service";
+import { SecureEventsService } from "./secure-events.service";
 
 @Component({
   selector: "app-libsecure",

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Config } from "./app.config";
+import { Config } from "../app.config";
 
 const secureUrl = Config.apiURL + "/secure";
 
