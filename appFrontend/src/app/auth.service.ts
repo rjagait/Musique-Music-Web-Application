@@ -5,6 +5,7 @@ import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
 
 import { Config } from "./app.config";
+import { SanitizeService } from './sanitize.service';
 
 const openUrl = Config.apiURL + "/open";
 
@@ -15,16 +16,14 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private afAuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private _sanitize: SanitizeService
   ) { }
 
   userLogin(user) {
-    const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (!user.username.match(regExEmail)) {
-      alert("Expected email, found " + user.username);
+    if (!this._sanitize.isEmail(user.username)) {
       return;
     }
-
     return this.http.post<any>(openUrl + "/user/login", {
       username: user.username,
       password: user.password
@@ -32,9 +31,7 @@ export class AuthService {
   }
 
   userSignup(Username, Password) {
-    const regExEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (!Username.match(regExEmail)) {
-      alert("Expected email, found " + Username);
+    if (!this._sanitize.isEmail(Username)) {
       return;
     }
     return this.http.post<any>(openUrl + "/user/signup", {

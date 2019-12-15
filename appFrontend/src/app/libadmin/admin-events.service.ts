@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Config } from "../app.config";
+import { SanitizeService } from '../sanitize.service';
 
 const adminUrl = Config.apiURL + "/admin";
 
@@ -8,7 +9,7 @@ const adminUrl = Config.apiURL + "/admin";
   providedIn: "root"
 })
 export class AdminEventsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private _sanitize: SanitizeService) { }
 
   // On init get all
   getAllSOngsForAdmin() {
@@ -58,6 +59,14 @@ export class AdminEventsService {
   }
 
   updateSong(songID, songDetails) {
+    if (!this._sanitize.isString(songDetails.genre) ||
+      !this._sanitize.isString(songDetails.title) ||
+      !this._sanitize.isString(songDetails.artist) ||
+      !this._sanitize.isString(songDetails.album) ||
+      !this._sanitize.isString(songDetails.track)
+    ) {
+      return;
+    }
     return this.http.put<any>(adminUrl + "/song/update/" + songID, {
       genre: songDetails.genre,
       title: songDetails.title,
@@ -68,6 +77,14 @@ export class AdminEventsService {
   }
 
   addNewSong(newTitle, newGenre, newArtist, newAlbum, newTrack) {
+    if (!this._sanitize.isString(newTitle) ||
+      !this._sanitize.isString(newGenre) ||
+      !this._sanitize.isString(newArtist) ||
+      !this._sanitize.isString(newAlbum) ||
+      !this._sanitize.isString(newTrack)
+    ) {
+      return;
+    }
     return this.http.post<any>(adminUrl + "/song", {
       genre: newGenre,
       title: newTitle,
@@ -87,6 +104,11 @@ export class AdminEventsService {
   }
 
   updatePlaylistDetails(playlistID, playlistDetails) {
+    if (!this._sanitize.isString(playlistDetails.title) ||
+      !this._sanitize.isString(playlistDetails.description)
+    ) {
+      return;
+    }
     return this.http.put<any>(
       adminUrl + "/playlist/updatedetails/" + playlistID,
       {
@@ -97,6 +119,11 @@ export class AdminEventsService {
   }
 
   addNewPlaylist(newTitle, newDesc, newUsername) {
+    if (!this._sanitize.isString(newTitle) ||
+      !this._sanitize.isString(newDesc)
+    ) {
+      return;
+    }
     console.log("Will add these details: " + newTitle + newDesc + newUsername);
     return this.http.post<any>(adminUrl + "/playlist", {
       username: newUsername,

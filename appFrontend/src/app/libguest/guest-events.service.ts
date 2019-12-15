@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Config } from "../app.config";
+import { SanitizeService } from '../sanitize.service';
 
 const openUrl = Config.apiURL + "/open";
 
@@ -8,7 +9,7 @@ const openUrl = Config.apiURL + "/open";
   providedIn: 'root'
 })
 export class GuestEventsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private _sanitize: SanitizeService) { }
 
   // on init gets
   getTopnSongs() {
@@ -17,13 +18,9 @@ export class GuestEventsService {
 
   // Operations on songs
   searchSong(songname) {
-    console.log("Searching by attribute");
-    const regExName = /^[a-zA-Z0-9 àâçéèêëîïôûùüÿñæœ\',]*$/;
-    if (!songname || !songname.match(regExName)) {
-      alert("Format not supported");
+    if (!this._sanitize.isString(songname)) {
       return;
     }
-
     return this.http.get<any>(openUrl + "/song/search/" + songname);
   }
 
