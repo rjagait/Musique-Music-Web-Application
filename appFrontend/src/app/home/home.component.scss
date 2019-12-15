@@ -1,13 +1,6 @@
 /* Styling the login page */
 
-.loginForm {
-    background-image: url("../images/background6.jpg");
-    min-height: 564px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    font-family: Georgia, Cambria, "Times New Roman", serif;
+.headerblock {
     .about {
         position: absolute;
         top: 8px;
@@ -19,39 +12,10 @@
     }
     form {
         padding-top: 30%;
-        position: absolute;
         right: 0;
-        margin: 20px;
         max-width: 350px;
         padding: 16px;
         background-color: white;
         border: 3px solid #f1f1f1;
-        text-align: center;
-        width: 30%;
-        align-items: center;
-        div {
-            padding: 16px;
-            input[type=password],
-            input[type=email] {
-                width: 80%;
-                padding: 12px 20px;
-                margin: 8px 0;
-                display: inline-block;
-                border: 1px solid rgb(181, 181, 181);
-                box-sizing: border-box;
-            }
-            button {
-                background-color: rgb(41, 172, 128);
-                color: white;
-                padding: 14px 20px;
-                margin: 8px 0;
-                border: none;
-                cursor: pointer;
-                width: 80%;
-            }
-            button:hover {
-                opacity: 0.8;
-            }
-        }
     }
 }

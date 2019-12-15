@@ -1,64 +1,9 @@
 /* Styling the songs page */
 
-.songs {
-    background-image: url("../images/background6.jpg");
-    min-height: 564px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    font-family: Georgia, Cambria, "Times New Roman", serif;
+.headerblock {
     .searchContainer {
         display: flex;
         flex-wrap: wrap;
-        padding-bottom: 20px;
-        position: relative;
-        left: 80%;
-    }
-    .overlay {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        overflow-x: hidden;
-        transition: 0.5s;
-        background-color: rgba(13, 49, 37, 0.9);
-        .overlay-content {
-            position: relative;
-            top: 10%;
-            width: 100%;
-            .split {
-                min-height: 540px;
-                width: 50%;
-                position: absolute;
-                z-index: 1;
-                top: 0;
-                overflow-x: hidden;
-                padding-top: 20px;
-            }
-            .left {
-                left: 0;
-            }
-            .right {
-                right: 0;
-                background-color: rgba(0, 0, 0, 0.2);
-                .closebtn {
-                    position: absolute;
-                    top: 20px;
-                    right: 45px;
-                    font-size: 60px;
-                }
-            }
-        }
-        h2,
-        p {
-            padding: 8px;
-            color: white;
-            display: block;
-            transition: 0.3s;
-        }
     }
     ul {
         list-style-type: none;
@@ -91,20 +36,6 @@
             background: rgba(250, 244, 215, 0.4);
         }
     }
-}
-
-.notifButton {
-    background-color: rgb(0, 0, 0, 0.2);
-    text-decoration: none;
-    padding: 10px 15px;
-    position: relative;
-    display: inline-block;
-    border: none;
-    color: white;
-}
-
-.notifButton:hover {
-    background-color: rgb(0, 0, 0);
 }
 
 form div label {
