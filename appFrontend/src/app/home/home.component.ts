@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   }
 
   gotoGoogleLogin() {
-    console.log("WIll login with google");
     this._auth.googleSignin();
   }
 
@@ -26,6 +25,6 @@ export class HomeComponent implements OnInit {
   }
 
   gotoGuestUser() {
-    this.router.navigate(["songs"]);
+    this.router.navigate(["libguest"]);
   }
 }

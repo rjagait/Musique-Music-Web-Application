@@ -7,10 +7,10 @@ const openUrl = Config.apiURL + "/open";
 
 @Component({
   selector: "app-songs",
-  templateUrl: "./songs.component.html",
-  styleUrls: ["./songs.component.scss"]
+  templateUrl: "./libguest.component.html",
+  styleUrls: ["./libguest.component.scss"]
 })
-export class SongsComponent implements OnInit {
+export class LibguestComponent implements OnInit {
   searchedSongs: Object;
   famousSongs: Object;
   songDetails: Object;

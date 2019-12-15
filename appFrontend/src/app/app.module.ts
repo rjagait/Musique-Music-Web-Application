@@ -12,7 +12,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
 import { HomeComponent } from "./home/home.component";
-import { SongsComponent } from "./songs/songs.component";
+import { LibguestComponent } from "./libguest/libguest.component";
 import { LibadminComponent } from "./libadmin/libadmin.component";
 import { AuthService } from "./auth.service";
 import { TokenInterceptorService } from "./token-interceptor.service";
@@ -28,7 +28,7 @@ import { Config } from './app.config';
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    SongsComponent,
+    LibguestComponent,
     LibadminComponent,
     LibsecureComponent
   ],
