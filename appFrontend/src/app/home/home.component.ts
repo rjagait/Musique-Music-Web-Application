@@ -37,6 +37,10 @@ export class HomeComponent implements OnInit {
    * Navigate to guest user page
    */
   gotoGuestUser() {
+    localStorage.setItem("token", "NA");
+    localStorage.setItem("username", "NA");
+    localStorage.setItem("userid", "NA");
+    localStorage.setItem("ismanager", "false");
     this.router.navigate(["libguest"]);
   }
 }

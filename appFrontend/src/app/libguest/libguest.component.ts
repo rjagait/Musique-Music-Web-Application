@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { GuestEventsService } from './guest-events.service';
+import { Router } from "@angular/router";
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: "app-songs",
@@ -13,10 +15,42 @@ export class LibguestComponent implements OnInit {
   songDetails: Object;
   songReviews: object;
 
-  constructor(private _eventService: GuestEventsService) { }
+  isAuthenticatedUser: Boolean;
+  isAdmin: Boolean;
+
+
+  constructor(
+    private router: Router,
+    private _eventService: GuestEventsService,
+    private _authService: AuthService) {
+      var user = this._authService.getUsername();
+      console.log("user: "+ user);
+      if(user === "NA"){
+        this.isAuthenticatedUser= false;
+      } else {
+        this.isAuthenticatedUser= true;
+      }
+      var isadmin = this._authService.getIsManager();
+      console.log("isadmin: "+ isadmin);
+      if(isadmin === "false"){
+        this.isAdmin= false;
+      } else {
+        this.isAdmin= true;
+      }
+    // this.username = this._authService.getUsername();
+
+  }
 
   ngOnInit() {
     this.getTopnSongsFE();
+  }
+
+  accessUserFunc() {
+    this.router.navigate(["libsecure"]);
+  }
+
+  accessAdminFunc() {
+    this.router.navigate(["libadmin"]);
   }
 
   /**

@@ -27,6 +27,9 @@
         </div>
     </div>
 
+    <button class="notifButton " type="button" *ngIf="isAuthenticatedUser" (click)="accessUserFunc() "> Access User Functionalities </button>
+    <button class="notifButton " type="button" *ngIf="isAdmin" (click)="accessAdminFunc() "> Access Admin Functionalities </button>
+
     <span class=searchContainer>
         <input class="notifButton " type="text " [(ngModel)]="songname " placeholder="Enter search text here " maxlength="100 " title="This search supports all attributes to search for songs " pattern='^[0-9a-zA-Z]*$' required><br>
         <button class="notifButton " type="button " (click)="searchSong(songname) "> &#8981; </button>

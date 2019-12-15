@@ -71,6 +71,10 @@ export class AuthService {
     return localStorage.getItem("userid");
   }
 
+  getIsManager() {
+    return localStorage.getItem("ismanager");
+  }
+
   loggedIn() {
     return !!localStorage.getItem("token");
   }
