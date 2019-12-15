@@ -24,6 +24,10 @@ export class LoginComponent implements OnInit {
     this.router.navigate(["signup"]);
   }
 
+  /**
+   * Checks if user exists and check if password correct
+   * returns jwt token, that is appended in future requests
+   */
   userLogin() {
     this._auth.userLogin(this.loginUserData).subscribe(
       res => {

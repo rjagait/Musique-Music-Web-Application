@@ -12,18 +12,30 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() { }
 
+  /**
+   * Navigate to login page
+   */
   gotoLogin() {
     this.router.navigate(["login"]);
   }
 
+  /**
+   * Navigate to google login page
+   */
   gotoGoogleLogin() {
     this._auth.googleSignin();
   }
 
+  /**
+   * Navigate to signup page
+   */
   gotoSignup() {
     this.router.navigate(["signup"]);
   }
 
+  /**
+   * Navigate to guest user page
+   */
   gotoGuestUser() {
     this.router.navigate(["libguest"]);
   }

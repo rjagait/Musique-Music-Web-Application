@@ -8,12 +8,15 @@ import { AuthService } from "../auth.service";
   styleUrls: ["./libadmin.component.scss"]
 })
 export class LibadminComponent implements OnInit {
+  // song details
   allSongs: Object;
   songDetails: Object;
 
+  // user details
   allUsers: Object;
   self: String;
 
+  // playlist details
   allPlaylists: Object;
   playListDetails: Object;
 
@@ -251,16 +254,16 @@ export class LibadminComponent implements OnInit {
   }
 
   /**
-   * Controls the display of show song details
-   * Show
+   * Controls the display of show song details - Show
+   * @param id id of the block to show
    */
   openNav(id: string) {
     document.getElementById(id).style.width = "100%";
   }
 
   /**
-   * Controls the display of show song details
-   * Hide
+   * Controls the display of show song details - Hide
+   * @param id id of the block to hide
    */
   closeNav(id: string) {
     document.getElementById(id).style.width = "0%";

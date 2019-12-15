@@ -7,16 +7,21 @@ import { GuestEventsService } from './guest-events.service';
   styleUrls: ["./libguest.component.scss"]
 })
 export class LibguestComponent implements OnInit {
+
   searchedSongs: Object;
   famousSongs: Object;
   songDetails: Object;
   songReviews: object;
+
   constructor(private _eventService: GuestEventsService) { }
 
   ngOnInit() {
     this.getTopnSongsFE();
   }
 
+  /**
+   * Get top n songs with highest average rating
+   */
   getTopnSongsFE() {
     this._eventService.getTopnSongs().subscribe(
       res => {
@@ -29,6 +34,7 @@ export class LibguestComponent implements OnInit {
 
   /**
    * Search song by a string for any attribute
+   * @param Songname name of song
    */
   searchSong(Songname) {
     this._eventService.searchSong(Songname).subscribe(
@@ -48,8 +54,6 @@ export class LibguestComponent implements OnInit {
     this._eventService.getSongByID(SongID).subscribe(
       res => {
         console.log(res);
-        console.log("Check below:");
-        console.log(res.reviews[0].userid.username);
         this.songDetails = res;
         this.songReviews = res['reviews'];
         this.openNav();
@@ -66,8 +70,6 @@ export class LibguestComponent implements OnInit {
     this._eventService.getAllReviews(SongID).subscribe(
       res => {
         console.log(res);
-        console.log("Check below review:");
-        console.log(res[0].userid.username);
         this.songReviews = res;
         document.getElementById("moreButton").style.display = "none";
       },

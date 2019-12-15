@@ -13,9 +13,9 @@ router.get('/song/search/:str', songOperator.searchSongByAnyAttribute);
 router.get('/review/:id', reviewOperator.getReviewBySongID);
 
 // user
+router.get('/user/verify/:token', userOperator.verifyUser);
 router.post('/user/login', userOperator.loginUser);
 router.post('/user/googlelogin/:username', userOperator.googleLoginUser);
 router.post('/user/signup', userOperator.signupUser);
-router.get('/user/verify/:token', userOperator.verifyUser);
 
 module.exports = router;

@@ -8,18 +8,18 @@ const checkAuth = require('../middleware/checkauth');
 // song
 router.get('/song', checkAuth.checkauthAdmin, songOperator.getAllSongs);
 router.get('/song/:id', checkAuth.checkauthAdmin, songOperator.getSongByID);
-router.post('/song', checkAuth.checkauthAdmin, songOperator.addNewSong);
-router.put('/song/update/:id', checkAuth.checkauthAdmin, songOperator.updateSongDetailsByID);
-router.delete('/song/:id', checkAuth.checkauthAdmin, songOperator.deleteSong);
 router.put('/song/hide/:id', checkAuth.checkauthAdmin, songOperator.hideSong);
 router.put('/song/unhide/:id', checkAuth.checkauthAdmin, songOperator.unhideSong);
+router.put('/song/update/:id', checkAuth.checkauthAdmin, songOperator.updateSongDetailsByID);
+router.post('/song', checkAuth.checkauthAdmin, songOperator.addNewSong);
+router.delete('/song/:id', checkAuth.checkauthAdmin, songOperator.deleteSong);
 
 // playlist
-router.post('/playlist', checkAuth.checkauthAdmin, playlistOperator.addNewPlaylistAdmin);
 router.get('/playlist', checkAuth.checkauthAdmin, playlistOperator.getAllPlaylists);
 router.get('/playlist/:id', checkAuth.checkauthAdmin, playlistOperator.getPlaylistByID);
-router.delete('/playlist/:id', checkAuth.checkauthAdmin, playlistOperator.deletePlaylist);
 router.put('/playlist/updatedetails/:id', checkAuth.checkauthAdmin, playlistOperator.updatePlaylistDetailsByID);
+router.post('/playlist', checkAuth.checkauthAdmin, playlistOperator.addNewPlaylistAdmin);
+router.delete('/playlist/:id', checkAuth.checkauthAdmin, playlistOperator.deletePlaylist);
 
 // user
 router.get('/user', checkAuth.checkauthAdmin, userOperator.getAllUsers);
