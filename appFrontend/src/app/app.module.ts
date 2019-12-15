@@ -5,6 +5,9 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireAuthModule } from "@angular/fire/auth";
 
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
@@ -17,6 +20,8 @@ import { AdminEventsService } from "./admin-events.service";
 import { LibsecureComponent } from "./libsecure/libsecure.component";
 import { SecureEventsService } from "./secure-events.service";
 
+import { Config } from './app.config';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +32,15 @@ import { SecureEventsService } from "./secure-events.service";
     LibadminComponent,
     LibsecureComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    AngularFireModule.initializeApp(Config.angularfire_config),
+    AngularFirestoreModule,
+    AngularFireAuthModule
+  ],
   providers: [
     AuthService,
     AdminEventsService,
@@ -40,4 +53,4 @@ import { SecureEventsService } from "./secure-events.service";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -7,6 +7,50 @@ const sgMail = require('@sendgrid/mail');
 const db = require('../../config/database');
 
 /**
+ * Add a new user to the auth users list, from google login requests
+ * google login
+ */
+exports.googleLoginUser = async function(req, res) {
+    // Look for user by same username in db
+    const userFound = await Users.findOne({ username: req.params.username });
+
+    // if no user found, create one as GoogleLogin
+    if (userFound == null || userFound.length < 1) {
+        const users = new Users({
+            username: req.params.username,
+            password: "NA",
+            isGoogleLoginID: true,
+        });
+        users.save();
+    }
+
+    // Get details of that user, create a jwt token for future requests
+    setTimeout(async function() {
+        const user = await Users.findOne({ username: req.params.username });
+        console.log(user);
+        if (user.isDeactivated) {
+            return res.status(401).json({
+                message: "Account Deactivated, please contact site admin"
+            })
+        }
+        const token = jwt.sign({
+                username: user.username,
+                userId: user._id
+            },
+            auth.jwtkey, {
+                expiresIn: "1h"
+            });
+        return res.status(200).json({
+            message: 'Authentication Success',
+            token: token,
+            username: user.username,
+            userid: user._id,
+            isManager: user.isManager,
+        })
+    }, 500);
+};
+
+/**
  * Add a new user to the auth users list
  * login
  */
@@ -18,7 +62,11 @@ exports.loginUser = async function(req, res) {
         });
     }
     isCorrectPassword = await argon2.verify(user.password, req.body.password);
-    if (!isCorrectPassword) {
+    if (user.isGoogleLoginID) {
+        return res.status(401).json({
+            message: "Please login as Google login instead."
+        })
+    } else if (!isCorrectPassword) {
         return res.status(401).json({
             message: "Incorrect Password, please try again"
         })
