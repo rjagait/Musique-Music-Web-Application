@@ -17,7 +17,7 @@ exports.getTopnSongs = async function(req, res) {
     }
 
     Songs
-        .find()
+        .find({ isHidden: false })
         .sort('-totalReviews').limit(10)
         .populate({ path: 'Reviews' })
         .exec()
@@ -62,7 +62,7 @@ exports.getAllSongs = function(req, res) {
  */
 exports.getAllSongsForUser = function(req, res) {
     Songs
-        .find({ isHidden: 0 })
+        .find({ isHidden: false })
         .exec()
         .then(docs => {
             console.log(docs);
@@ -86,7 +86,7 @@ exports.getAllSongsForUser = function(req, res) {
 exports.searchSongByAnyAttribute = function(req, res) {
     const searchText = req.params.str;
     Songs
-        .find({ isHidden: 0 })
+        .find({ isHidden: false })
         .find({
             $or: [
                 { title: { $regex: searchText, $options: 'i' } },
@@ -194,7 +194,7 @@ exports.updateSongDetailsByID = function(req, res) {
  */
 exports.hideSong = function(req, res) {
     const id = req.params.id;
-    Songs.update({ _id: id }, { $set: { isHidden: "1" } }).exec()
+    Songs.update({ _id: id }, { $set: { isHidden: true } }).exec()
         .then(result => {
             console.log(result);
             res.status(200).json(result);
@@ -212,7 +212,7 @@ exports.hideSong = function(req, res) {
  */
 exports.unhideSong = function(req, res) {
     const id = req.params.id;
-    Songs.update({ _id: id }, { $set: { isHidden: "0" } }).exec()
+    Songs.update({ _id: id }, { $set: { isHidden: false } }).exec()
         .then(result => {
             console.log(result);
             res.status(200).json(result);

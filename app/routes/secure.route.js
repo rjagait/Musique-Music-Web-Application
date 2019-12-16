@@ -10,8 +10,6 @@ const checkAuth = require('../middleware/checkauth');
 router.get('/song', checkAuth.checkauthUser, songOperator.getAllSongsForUser);
 router.get('/song/search/:str', checkAuth.checkauthUser, songOperator.searchSongByAnyAttribute);
 router.post('/song', checkAuth.checkauthUser, songOperator.addNewSong);
-// router.delete('/song/:id', checkAuth.checkauthUser, songOperator.deleteSong);
-// router.put('/song/:id', checkAuth.checkauthUser, songOperator.updateSongDetailsByID);
 
 // review
 router.post('/review', checkAuth.checkauthUser, reviewOperator.addNewReview);

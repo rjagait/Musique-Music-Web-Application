@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const songsSchema = mongoose.Schema({
     title: { type: String, required: true, maxlength: 100 },
-    // , match: /^[a-zA-Z0-9 -,]*$/ 
     artist: { type: String, required: true, maxlength: 30 },
     album: { type: String, maxlength: 30 },
     track: { type: String, maxlength: 30 },

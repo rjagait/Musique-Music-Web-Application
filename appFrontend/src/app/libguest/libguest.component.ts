@@ -37,8 +37,6 @@ export class LibguestComponent implements OnInit {
       } else {
         this.isAdmin= true;
       }
-    // this.username = this._authService.getUsername();
-
   }
 
   ngOnInit() {
