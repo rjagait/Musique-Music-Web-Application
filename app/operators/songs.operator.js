@@ -142,8 +142,8 @@ exports.addNewSong = function(req, res) {
  */
 exports.getSongByID = async function(req, res) {
     const id = req.params.id;
-    var reviews = await Reviews.find({ songid: id }).sort('-_id');
-    var reviewstopn = await Reviews.find({ songid: id }).sort('-_id').limit(2);
+    var reviews = await Reviews.find({ songid: id }).sort('-_id').populate('userid');
+    var reviewstopn = await Reviews.find({ songid: id }).sort('-_id').limit(3).populate('userid');
 
     Songs.findOne({ _id: id })
         .populate('reviews')

@@ -6,7 +6,7 @@ const userOperator = require('../operators/users.operator');
 
 // song
 router.get('/song/topn', songOperator.getTopnSongs);
-router.get('/song/:id', songOperator.getSongByID);
+router.get('/song/byid/:id', songOperator.getSongByID);
 router.get('/song/search/:str', songOperator.searchSongByAnyAttribute);
 
 // review

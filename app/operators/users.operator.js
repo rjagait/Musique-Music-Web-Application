@@ -124,7 +124,7 @@ exports.signupUser = async function(req, res) {
                         SENDGRID_API_KEY = db.sendgrid_key;
                         verifurl = db.url + "/open/user/verify/" + token;
                         // rjagait: change it to req.body.username
-                        emailto = 'rashjagait@gmail.com';
+                        emailto = req.body.username;
 
                         sgMail.setApiKey(SENDGRID_API_KEY);
                         const msg = {
@@ -170,7 +170,7 @@ exports.resendVerifEmail = function(req, res) {
             SENDGRID_API_KEY = db.sendgrid_key;
             verifurl = db.url + "/open/user/verify/" + user.secretToken;
             // rjagait: change it to req.body.username
-            emailto = 'rashjagait@gmail.com';
+            emailto = req.body.username;
 
             sgMail.setApiKey(SENDGRID_API_KEY);
             const msg = {

@@ -25,7 +25,7 @@ export class GuestEventsService {
   }
 
   getSongByID(SongID) {
-    return this.http.get(openUrl + "/song/" + SongID);
+    return this.http.get(openUrl + "/song/byid/" + SongID);
   }
 
   // Operations on reviews
