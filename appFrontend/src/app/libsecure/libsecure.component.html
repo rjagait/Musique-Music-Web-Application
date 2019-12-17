@@ -102,8 +102,8 @@
                 <h2>List of Songs</h2>
                 <ul id="songsinplaylist" *ngIf="playListDetails.playlistArray">
                     <li *ngFor="let playlistSong of playListDetails.playlistArray">
-                        <button class="notifButton" type="button" (click)="removeSongFromPlaylistFE(playListDetails._id, playlistSong._id)"><b>&times;</b> </button>
-                        <p class="detail"><b>{{ playlistSong.title }}</b></p>
+                        <button class="notifButton" *ngIf="!playlistSong.isHidden" type="button" (click)="removeSongFromPlaylistFE(playListDetails._id, playlistSong._id)"><b>&times;</b> </button>
+                        <p class="detail" *ngIf="!playlistSong.isHidden"><b>{{ playlistSong.title }}</b></p>
                     </li>
                 </ul>
             </form>

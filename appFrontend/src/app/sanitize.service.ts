@@ -17,8 +17,11 @@ export class SanitizeService {
   }
 
   isString(str) {
-    const regExName = /^[a-zA-Z0-9 àâçéèêëîïôûùüÿñæœ\',]*$/;
-    if (!str || !str.match(regExName)) {
+    const regExName = "^[a-zA-Z0-9 àâçéèêëîïôûùüÿñæœ\',/-]*$";
+    if(!str){
+      return true;
+    }
+    if (!str.match(regExName)) {
       alert("Format not supported");
       return false;
     }
